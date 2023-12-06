@@ -1,0 +1,10 @@
+/* css styles */
+@font-face {
+  font-family: "tagettes";
+  src: url("assets/fonts/tagettP2_U.woff") format("woff"),
+  url("assets/fonts/tagetts_U.woff") format("woff")
+}
+
+.navbar-title{
+  font-family: "tagettes";
+}

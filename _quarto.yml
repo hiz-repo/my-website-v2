@@ -1,0 +1,41 @@
+project:
+  type: website
+  render:
+    - "*.qmd"
+  resources: 
+    - "files/*"
+
+website:
+  title: "Hidezo Suganuma"
+  favicon: assets/img/favicon.ico
+  navbar:
+    right:
+      - bio.qmd
+      - publications.qmd
+      - blog.qmd
+      - link.qmd
+      - icon: twitter
+        href: https://twitter.com/hiz_suganuma
+      - icon: linkedin
+        href: https://www.linkedin.com/in/hidezo-suganuma-540b08277/
+      - icon: github
+        href: https://github.com/hiz-repo
+      - text: English
+        file: index-e.qmd
+      - text: 日本語
+        file: index.qmd
+        
+  sidebar:
+    contents: blog/*
+  page-footer: 'Except where otherwise noted, content on this site is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">Creative Commons Attribution 4.0 International License</a>.<br> For privacy policy and other terms, click <a href="/terms.html">here</a>.'
+  twitter-card: true
+  google-analytics: G-Q8B6LZFM4W
+  
+format:
+  html:
+    theme:
+      light: flatly
+      dark: darkly
+    css: styles.css
+    highlight: github
+

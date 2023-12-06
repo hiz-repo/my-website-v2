@@ -1,0 +1,25 @@
+---
+title: "Link"
+about:
+  template: marquee
+
+---
+
+#### SNS
+
+- [ORCID](https://orcid.org/0000-0002-7561-992X)
+- [Open Science Framework](https://osf.io/vrk8f/)
+- [GitHub](https://github.com/hiz-repo)
+- [researchmap](https://researchmap.jp/hsuganuma)
+
+#### 所属
+
+- [亀田達也研究室](http://www.tatsuyakameda.com/)
+- [東京大学大学院人文社会系研究科 社会心理学研究室](http://www.utokyo-socpsy.com/index.html)
+- [日本社会心理学会](https://www.socialpsychology.jp/)
+- [日本心理学会](https://psych.or.jp/)
+- [日本人間行動進化学会](https://www.hbesj.org/)
+
+#### その他
+
+- [東大ホースメンクラブ](https://ameblo.jp/ut-horsemen/)

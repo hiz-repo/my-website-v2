@@ -8,6 +8,8 @@ project:
 
 website:
   title: "Hidezo Suganuma"
+  site-url: https://hidezosuganuma.com
+  site-path: "/"
   favicon: assets/img/favicon.ico
   navbar:
     right:

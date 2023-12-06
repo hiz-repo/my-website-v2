@@ -15,3 +15,5 @@ ORCID: [0000-0002-7561-992X](https://orcid.org/0000-0002-7561-992X)
 社会心理学を専攻する大学院生です．<br>行動実験・計算論モデリング・計算機シミュレーションなどの手法を用いて，集合知や累積的文化が創発するための認知・行動的なメカニズムについて研究を行っています．
 
 E-mail: suganuma.hiz[at]gmail.com
+
+<iframe allow="autoplay *; encrypted-media *; fullscreen *; clipboard-write" frameborder="0" height="450" style="width:100%;max-width:660px;overflow:hidden;border-radius:10px;" sandbox="allow-forms allow-popups allow-same-origin allow-scripts allow-storage-access-by-user-activation allow-top-navigation-by-user-activation" src="https://embed.music.apple.com/jp/playlist/misc/pl.u-PDb408gsLd1NB3g"></iframe>

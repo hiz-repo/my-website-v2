@@ -1,0 +1,172 @@
+---
+title: "Quartoでサイトを作り直した"
+description: "個人サイトをQuarto+GitHub Pagesで作り直しました．"
+author: "Hidezo Suganuma"
+date: "2023-12-07"
+categories:
+  - Quarto
+---
+
+```{r, setup, include=FALSE}
+knitr::opts_chunk$set(
+  warning = FALSE,
+  message = FALSE
+)
+
+library(tools)
+library(magrittr)
+library(effsize)
+library(effectsize)
+library(ggdist)
+library(ggExtra)
+library(tidyverse)
+library(tidytext)
+library(patchwork)
+library(magrittr)
+library(summarytools)
+library(kableExtra)
+library(bayesplot)
+library(rstan)
+library(cmdstanr)
+library(plotly)
+library(corrplot)
+library(viridis)
+library(GGally)
+library(ggdist)
+library(ppcor)
+library(DT)
+library(lsa)
+library(rstatix)
+library(tidybayes)
+library(survival)
+library(survminer)
+library(survMisc)
+library(plotrix)
+library(emmeans)
+library(arrow)
+library(fs)
+library(BayesFactor)
+library(brms)
+library(ggsci)
+
+```
+
+## Quartoとは
+
+Quarto（<https://quarto.org/>）はPosit社が開発したオープンソースの文書作成ツールである．Pandocベースで汎用性が高いのが最大の特徴．
+
+もともと実験データの解析や普段の文書作成で利用していたが，どうせなら個人サイトもQuartoで作ってしまおうと思い立った．以前はJekyll+Github Pagesで個人サイトを作っていたが，コード付きのブログ投稿などはこちらのほうが手軽にできそうなのでおすすめです．
+
+## 公開と作成の手順
+
+基本的には[公式ガイド](https://quarto.org/docs/websites/)の通りにやればよい．
+
+### ローカルでQuartoで文書を作成する
+
+まずプロジェクトを作成する．
+
+```{.bash filename="Terminal" eval=FALSE}
+quarto create project blog mysite
+
+```
+
+`quarto preview`コマンドでプレビュー可能．
+
+```{.bash filename="Terminal" eval=FALSE}
+cd mysite
+quarto preview
+
+```
+
+### Githubにpushする
+
+Github Pagesで公開するために`_quarto.yml`を編集する．ここでは`docs`以下に出力するようにしている．
+
+```{.yaml filename="_quarto.yml"}
+project:
+  type: website
+  output-dir: docs
+
+```
+
+Github PagesではデフォルトでJekyllを使用することになっているので，余計な処理をしないようルートディレクトリに`.nojekyll`ファイルを作成する．
+
+```{.bash filename="Mac/Linux" eval=FALSE}
+touch .nojekyll
+
+```
+
+```{.bash filename="Windows" eval=FALSE}
+copy NUL .nojekyll
+
+```
+
+指定したディレクトリにHTMLを出力．
+
+```{.bash filename="Terminal" eval=FALSE}
+quarto render
+
+```
+
+無事にレンダリングされたら，Githubにpushしよう．
+
+```{.bash filename="Terminal" eval=FALSE}
+git add .
+git commit -m "first commit"
+git push origin master
+
+```
+
+### Github Pagesで公開する
+
+Settings > Pagesから`docs`フォルダを公開するよう設定する．
+
+![](fig1.png)
+
+これで完成．
+
+他にも`quarto publish`コマンドで公開したり，Github Actionsで自動的にレンダリングするようにしたりできるが，今回は割愛．詳細は[公式ガイド](https://quarto.org/docs/publishing/github-pages.html)を参照すればよい．
+
+## ポストを追加する
+
+ポストを追加するには`posts`以下に新たにディレクトリを追加し，その中に`index.qmd`を作成する．ディレクトリ構成の例は以下の通り．
+
+```bash
+└── mysite/
+    ├── posts/
+    │   ├── post1/
+    │   │   └── index.qmd
+    │   └── post2/
+    │       └── index.qmd
+    ├── _quarto.yml
+    ├── index.qmd
+    └── blog.qmd
+
+```
+
+以下のようにポスト内容を記述すればよい．
+
+```{.markdown filename="index.qmd"}
+---
+title: "My first post"
+description: "Post description"
+author: "John Doe"
+date: "2023-12-06"
+date-modified: "2023-12-07"
+categories:
+  - news
+  - code
+  - analysis
+---
+
+This is my first post.
+
+```
+
+`categories`に適当な項目を指定することで各ポストにタグを付加することができる．デフォルトでは`quarto render`するたびに`posts/`以下の`.qmd`ファイルが自動的にレンダリングされる．ブラウザから`/blog`にアクセスすると，投稿がリストアップされていることを確認できる．
+
+## まとめ
+
+せっかくサイトを整備したのでこれからブログ投稿をたくさんしていきたいですね．
+
+あと，いい加減にプロフィール画像を実家の猫から変えなければ…。

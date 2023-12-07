@@ -1,6 +1,6 @@
 ---
 title: "Quartoでサイトを作り直した"
-description: "個人サイトをQuarto+GitHub Pagesで作り直しました．"
+description: "個人サイトをQuarto+GitHub Pagesで作り直してみました．"
 author: "Hidezo Suganuma"
 date: "2023-12-07"
 categories:
@@ -53,9 +53,9 @@ library(ggsci)
 
 ## Quartoとは
 
-Quarto（<https://quarto.org/>）はPosit社が開発したオープンソースの文書作成ツールである．Pandocベースで汎用性が高いのが最大の特徴．
+Quarto（<https://quarto.org/>）はPosit社が開発したオープンソースの文書作成ツールである．Pandocベースで汎用性が高く，RやPython，Juliaなどのコードを埋め込んだ文書を作成することができる．
 
-もともと実験データの解析や普段の文書作成で利用していたが，どうせなら個人サイトもQuartoで作ってしまおうと思い立った．以前はJekyll+Github Pagesで個人サイトを作っていたが，コード付きのブログ投稿などはこちらのほうが手軽にできそうなのでおすすめです．
+以前はJekyll+Github Pagesでサイトを作っていたが，コード付きのブログを書くのが少し手間だったのでこちらに乗り換えることにした．もともと実験データの解析や普段の文書作成で利用していたので慣れているというのもある．
 
 ## 公開と作成の手順
 
@@ -132,15 +132,16 @@ Settings > Pagesから`docs`フォルダを公開するよう設定する．
 ポストを追加するには`posts`以下に新たにディレクトリを追加し，その中に`index.qmd`を作成する．ディレクトリ構成の例は以下の通り．
 
 ```bash
-└── mysite/
-    ├── posts/
-    │   ├── post1/
-    │   │   └── index.qmd
-    │   └── post2/
-    │       └── index.qmd
-    ├── _quarto.yml
-    ├── index.qmd
-    └── blog.qmd
+mysite
+├── posts
+│   ├── post1
+│   │   └── index.qmd
+│   ├── post2
+│   │   └── index.qmd
+│   └── _metadata.yml
+├── _quarto.yml
+├── index.qmd
+└── blog.qmd
 
 ```
 

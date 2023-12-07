@@ -5,6 +5,7 @@ project:
     - "*.qmd"
   resources: 
     - "files/*"
+    - CNAME
 
 website:
   title: "Hidezo Suganuma"

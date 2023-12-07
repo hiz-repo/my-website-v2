@@ -147,7 +147,7 @@ mysite
 
 以下のようにポスト内容を記述すればよい．
 
-```{.markdown filename="index.qmd"}
+```{.markdown filename="mysite/posts/post1/index.qmd"}
 ---
 title: "My first post"
 description: "Post description"

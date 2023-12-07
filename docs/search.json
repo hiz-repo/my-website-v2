@@ -53,7 +53,7 @@
     "href": "posts/remake-website/index.html#ポストを追加する",
     "title": "Quartoでサイトを作り直した",
     "section": "ポストを追加する",
-    "text": "ポストを追加する\nポストを追加するにはposts以下に新たにディレクトリを追加し，その中にindex.qmdを作成する．ディレクトリ構成の例は以下の通り．\nmysite\n├── posts\n│   ├── post1\n│   │   └── index.qmd\n│   ├── post2\n│   │   └── index.qmd\n│   └── _metadata.yml\n├── _quarto.yml\n├── index.qmd\n└── blog.qmd\n以下のようにポスト内容を記述すればよい．\n\n\nindex.qmd\n\n---\ntitle: \"My first post\"\ndescription: \"Post description\"\nauthor: \"John Doe\"\ndate: \"2023-12-06\"\ndate-modified: \"2023-12-07\"\ncategories:\n  - news\n  - code\n  - analysis\n---\n\nThis is my first post.\n\ncategoriesに適当な項目を指定することで各ポストにタグを付加することができる．デフォルトではquarto renderするたびにposts/以下の.qmdファイルが自動的にレンダリングされる．ブラウザから/blogにアクセスすると，投稿がリストアップされていることを確認できる．"
+    "text": "ポストを追加する\nポストを追加するにはposts以下に新たにディレクトリを追加し，その中にindex.qmdを作成する．ディレクトリ構成の例は以下の通り．\nmysite\n├── posts\n│   ├── post1\n│   │   └── index.qmd\n│   ├── post2\n│   │   └── index.qmd\n│   └── _metadata.yml\n├── _quarto.yml\n├── index.qmd\n└── blog.qmd\n以下のようにポスト内容を記述すればよい．\n\n\nmysite/posts/post1/index.qmd\n\n---\ntitle: \"My first post\"\ndescription: \"Post description\"\nauthor: \"John Doe\"\ndate: \"2023-12-06\"\ndate-modified: \"2023-12-07\"\ncategories:\n  - news\n  - code\n  - analysis\n---\n\nThis is my first post.\n\ncategoriesに適当な項目を指定することで各ポストにタグを付加することができる．デフォルトではquarto renderするたびにposts/以下の.qmdファイルが自動的にレンダリングされる．ブラウザから/blogにアクセスすると，投稿がリストアップされていることを確認できる．"
   },
   {
     "objectID": "posts/remake-website/index.html#まとめ",

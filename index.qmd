@@ -3,8 +3,7 @@ title: "Hidezo Suganuma"
 image: assets/img/me.jpg
 about:
   template: trestles
-  image-width: 20em
-
+  image-shape: round
 ---
 
 菅沼 秀蔵

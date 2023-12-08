@@ -4,7 +4,6 @@ project:
   render:
     - "*.qmd"
   resources: 
-    - "files/*"
     - CNAME
 
 website:
@@ -38,5 +37,3 @@ format:
       light: flatly
       dark: darkly
     css: styles.css
-    highlight-style: arrow
-

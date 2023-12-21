@@ -1,0 +1,184 @@
+[
+  {
+    "objectID": "terms.html",
+    "href": "terms.html",
+    "title": "Terms",
+    "section": "",
+    "text": "当サイトのリンクやバナーから移動したサイトで提供される情報やサービス等について一切の責任を負いません． 当サイトのコンテンツや情報については，可能なかぎり正確な情報を提供するように努めておりますが，正確性や安全性を保証するものではありません．\n当サイトに掲載された内容によって生じた損害等の一切の責任を負いかねます．"
+  },
+  {
+    "objectID": "terms.html#著作権",
+    "href": "terms.html#著作権",
+    "title": "Terms",
+    "section": "著作権",
+    "text": "著作権\n当サイトで掲載している文章や画像などは，断りがある箇所を除いてCC-BY-NC 4.0で提供されています．"
+  },
+  {
+    "objectID": "terms.html#リンク",
+    "href": "terms.html#リンク",
+    "title": "Terms",
+    "section": "リンク",
+    "text": "リンク\n当サイトは基本的にリンクフリーです．リンクを行う場合の許可や連絡は不要です."
+  },
+  {
+    "objectID": "terms.html#アクセス解析ツールについて",
+    "href": "terms.html#アクセス解析ツールについて",
+    "title": "Terms",
+    "section": "アクセス解析ツールについて",
+    "text": "アクセス解析ツールについて\n当サイトではGoogleによるアクセス解析ツール「Googleアナリティクス」を利用しています．Googleアナリティクスはトラフィックデータの収集のためにクッキー（Cookie）を使います．トラフィックデータは匿名で収集されており，個人を特定するものではありません。\nクッキーの使用を望まない場合，ブラウザからクッキーを無効に設定できます．"
+  },
+  {
+    "objectID": "posts/remake-website/index.html",
+    "href": "posts/remake-website/index.html",
+    "title": "Quartoでサイトを作り直した",
+    "section": "",
+    "text": "Quarto（https://quarto.org/）はPosit社が開発したオープンソースの文書作成ツールである．Pandocベースで汎用性が高く，RやPython，Juliaなどのコードを埋め込んだ文書を作成することができる．\n以前はJekyll+Github Pagesでサイトを作っていたが，コード付きのブログを書くのが少し手間だったのでこちらに乗り換えることにした．もともと実験データの解析や普段の文書作成で利用していたので慣れているというのもある．"
+  },
+  {
+    "objectID": "posts/remake-website/index.html#quartoとは",
+    "href": "posts/remake-website/index.html#quartoとは",
+    "title": "Quartoでサイトを作り直した",
+    "section": "",
+    "text": "Quarto（https://quarto.org/）はPosit社が開発したオープンソースの文書作成ツールである．Pandocベースで汎用性が高く，RやPython，Juliaなどのコードを埋め込んだ文書を作成することができる．\n以前はJekyll+Github Pagesでサイトを作っていたが，コード付きのブログを書くのが少し手間だったのでこちらに乗り換えることにした．もともと実験データの解析や普段の文書作成で利用していたので慣れているというのもある．"
+  },
+  {
+    "objectID": "posts/remake-website/index.html#公開と作成の手順",
+    "href": "posts/remake-website/index.html#公開と作成の手順",
+    "title": "Quartoでサイトを作り直した",
+    "section": "公開と作成の手順",
+    "text": "公開と作成の手順\n基本的には公式ガイドの通りにやればよい．\n\nローカルでウェブサイトを作成する\nまずプロジェクトを作成する．\n\n\nTerminal\n\nquarto create project blog mysite\n\nquarto previewコマンドでプレビュー可能．\n\n\nTerminal\n\ncd mysite\nquarto preview\n\n\n\nGithubにpushする\nGithub Pagesで公開するために_quarto.ymlを編集する．ここではdocs以下に出力するようにしている．\n\n\n_quarto.yml\n\nproject:\n  type: website\n  output-dir: docs\n\nGithub PagesではデフォルトでJekyllを使用することになっているので，余計な処理をしないようルートディレクトリに.nojekyllファイルを作成する．\n\n\nMac/Linux\n\ntouch .nojekyll\n\n\n\nWindows\n\ncopy NUL .nojekyll\n\n指定したディレクトリにHTMLを出力．\n\n\nTerminal\n\nquarto render\n\n無事にレンダリングされたら，Githubにpushしよう．\n\n\nTerminal\n\ngit add .\ngit commit -m \"first commit\"\ngit push origin master\n\n\n\nGithub Pagesで公開する\nSettings &gt; Pagesからdocsフォルダを公開するよう設定する．\n\nこれで完成．\n他にもquarto publishコマンドで公開したり，Github Actionsで自動的にレンダリングするようにしたりできるが，今回は割愛．詳細は公式ガイドを参照すればよい．"
+  },
+  {
+    "objectID": "posts/remake-website/index.html#ポストを追加する",
+    "href": "posts/remake-website/index.html#ポストを追加する",
+    "title": "Quartoでサイトを作り直した",
+    "section": "ポストを追加する",
+    "text": "ポストを追加する\nポストを追加するにはposts以下に新たにディレクトリを追加し，その中にindex.qmdを作成する．ディレクトリ構成の例は以下の通り．\nmysite\n├── posts\n│   ├── post1\n│   │   └── index.qmd\n│   ├── post2\n│   │   └── index.qmd\n│   └── _metadata.yml\n├── _quarto.yml\n├── index.qmd\n└── blog.qmd\n以下のようにポスト内容を記述すればよい．\n\n\nmysite/posts/post1/index.qmd\n\n---\ntitle: \"My first post\"\ndescription: \"Post description\"\nauthor: \"John Doe\"\ndate: \"2023-12-06\"\ndate-modified: \"2023-12-07\"\ncategories:\n  - news\n  - code\n  - analysis\n---\n\nThis is my first post.\n\ncategoriesに適当な項目を指定することで各ポストにタグを付加することができる．デフォルトではquarto renderするたびにposts/以下の.qmdファイルが自動的にレンダリングされる．ブラウザから/blogにアクセスすると，投稿がリストアップされていることを確認できる．"
+  },
+  {
+    "objectID": "posts/remake-website/index.html#まとめ",
+    "href": "posts/remake-website/index.html#まとめ",
+    "title": "Quartoでサイトを作り直した",
+    "section": "まとめ",
+    "text": "まとめ\nせっかくサイトを整備したのでこれからブログ投稿をたくさんしていきたいですね．\nいい加減にプロフィール画像を実家の猫から変えなければ…"
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Hidezo Suganuma",
+    "section": "",
+    "text": "菅沼 秀蔵\n東京大学大学院人文社会系研究科 修士課程2年 ORCID: 0000-0002-7561-992X\n社会心理学を専攻する大学院生です．行動実験・計算論モデリング・計算機シミュレーションなどの手法を用いて，社会的な情報共有を通じて集合知や累積的文化が創発するための認知・行動的なメカニズムに関する研究を行っています．\nE-mail: suganuma.hiz[at]gmail.com"
+  },
+  {
+    "objectID": "blog.html",
+    "href": "blog.html",
+    "title": "Blog",
+    "section": "",
+    "text": "Quartoでサイトを作り直した\n\n\n\n\n\n\n\nQuarto\n\n\nwebsite\n\n\nGitHub Pages\n\n\n\n\n個人サイトをQuarto+GitHub Pagesで作り直してみました．\n\n\n\n\n\n\nDec 7, 2023\n\n\nHidezo Suganuma\n\n\n\n\n\n\nNo matching items"
+  },
+  {
+    "objectID": "bio.html",
+    "href": "bio.html",
+    "title": "Biography",
+    "section": "",
+    "text": "1999年　北海道苫小牧市にて生まれる\n2018年　札幌日本大学高等学校（中高一貫コース）卒業\n2018年　東京大学（文科三類）入学\n2022年　東京大学文学部 卒業\n2022年　東京大学大学院人文社会系研究科 入学"
+  },
+  {
+    "objectID": "bio.html#職歴教育歴",
+    "href": "bio.html#職歴教育歴",
+    "title": "Biography",
+    "section": "職歴・教育歴",
+    "text": "職歴・教育歴\n\nティーチング・アシスタント. 東京大学文学部，2022年4月-2023年3月."
+  },
+  {
+    "objectID": "bio.html#受賞研究費",
+    "href": "bio.html#受賞研究費",
+    "title": "Biography",
+    "section": "受賞・研究費",
+    "text": "受賞・研究費\n\n若手研究者奨励賞（奨励金：100,000円）．日本社会心理学会，2022年．\n補助金助成（助成額：117,000円）．公益財団法人科学技術融合振興財団，2022年．"
+  },
+  {
+    "objectID": "bio.html#資格など",
+    "href": "bio.html#資格など",
+    "title": "Biography",
+    "section": "資格など",
+    "text": "資格など\n\n普通自動車運転免許\n社会調査士"
+  },
+  {
+    "objectID": "bio.html#趣味",
+    "href": "bio.html#趣味",
+    "title": "Biography",
+    "section": "趣味",
+    "text": "趣味"
+  },
+  {
+    "objectID": "index-e.html",
+    "href": "index-e.html",
+    "title": "Hidezo Suganuma",
+    "section": "",
+    "text": "Hidezo SUGANUMA\n2nd year master’s studentDepartment of Social Psychology, the University of Tokyo ORCID: 0000-0002-7561-992X\nI am a graduate student specializing in social psychology. I study behavioral and cognitive mechanisms for emergence of collective intelligence and cumulative culture in human societies.\nE-mail: suganuma.hiz[at]gmail.com"
+  },
+  {
+    "objectID": "link.html",
+    "href": "link.html",
+    "title": "Link",
+    "section": "",
+    "text": "ORCID\nOpen Science Framework\nGitHub\nresearchmap"
+  },
+  {
+    "objectID": "link.html#sns",
+    "href": "link.html#sns",
+    "title": "Link",
+    "section": "",
+    "text": "ORCID\nOpen Science Framework\nGitHub\nresearchmap"
+  },
+  {
+    "objectID": "link.html#所属",
+    "href": "link.html#所属",
+    "title": "Link",
+    "section": "所属",
+    "text": "所属\n\n亀田達也研究室\n東京大学大学院人文社会系研究科 社会心理学研究室\n日本社会心理学会\n日本心理学会\n日本人間行動進化学会"
+  },
+  {
+    "objectID": "link.html#people",
+    "href": "link.html#people",
+    "title": "Link",
+    "section": "People",
+    "text": "People\n\nRyu Takahashi\nKiri Kuroda"
+  },
+  {
+    "objectID": "link.html#その他",
+    "href": "link.html#その他",
+    "title": "Link",
+    "section": "その他",
+    "text": "その他\n\n東大ホースメンクラブ"
+  },
+  {
+    "objectID": "publications.html",
+    "href": "publications.html",
+    "title": "Publications",
+    "section": "",
+    "text": "Suganuma et al. About social learning in an informaton foraging task. (drafting the manuscript)"
+  },
+  {
+    "objectID": "publications.html#in-preparation",
+    "href": "publications.html#in-preparation",
+    "title": "Publications",
+    "section": "",
+    "text": "Suganuma et al. About social learning in an informaton foraging task. (drafting the manuscript)"
+  },
+  {
+    "objectID": "publications.html#section",
+    "href": "publications.html#section",
+    "title": "Publications",
+    "section": "2023",
+    "text": "2023"
+  },
+  {
+    "objectID": "publications.html#section-1",
+    "href": "publications.html#section-1",
+    "title": "Publications",
+    "section": "2022",
+    "text": "2022\n\n菅沼秀蔵・内藤碧・片平健太郎・亀田達也. (2022). 先人にどう学ぶか：情報探索場面における系列的な社会学習の検討．日本人間行動進化学会第15回大会, 北海道大学(ポスター)．"
+  }
+]

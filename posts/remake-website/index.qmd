@@ -5,6 +5,8 @@ author: "Hidezo Suganuma"
 date: "2023-12-07"
 categories:
   - Quarto
+  - website
+  - GitHub Pages
 ---
 
 ```{r, setup, include=FALSE}
@@ -164,7 +166,7 @@ This is my first post.
 
 ```
 
-`categories`に適当な項目を指定することで各ポストにタグを付加することができる．デフォルトでは`quarto render`するたびに`posts/`以下の`.qmd`ファイルが自動的にレンダリングされる．ブラウザから`/blog`にアクセスすると，投稿がリストアップされていることを確認できる．
+`categories`に適当な項目を指定することで各ポストにタグを付加することができる．デフォルトでは`quarto render`するたびに`posts/`以下の`.qmd`ファイルが自動的にレンダリングされる．ブラウザから`/blog.html`にアクセスすると，投稿がリストアップされていることを確認できる．
 
 ## まとめ
 

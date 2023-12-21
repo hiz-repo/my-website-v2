@@ -74,7 +74,7 @@
     "href": "blog.html",
     "title": "Blog",
     "section": "",
-    "text": "Quartoでサイトを作り直した\n\n\n\n\n\n\n\nQuarto\n\n\n\n\n個人サイトをQuarto+GitHub Pagesで作り直してみました．\n\n\n\n\n\n\nDec 7, 2023\n\n\nHidezo Suganuma\n\n\n\n\n\n\nNo matching items"
+    "text": "Quartoでサイトを作り直した\n\n\n\n\n\n\n\nQuarto\n\n\nwebsite\n\n\nGitHub Pages\n\n\n\n\n個人サイトをQuarto+GitHub Pagesで作り直してみました．\n\n\n\n\n\n\nDec 7, 2023\n\n\nHidezo Suganuma\n\n\n\n\n\n\nNo matching items"
   },
   {
     "objectID": "bio.html",
@@ -138,6 +138,13 @@
     "title": "Link",
     "section": "所属",
     "text": "所属\n\n亀田達也研究室\n東京大学大学院人文社会系研究科 社会心理学研究室\n日本社会心理学会\n日本心理学会\n日本人間行動進化学会"
+  },
+  {
+    "objectID": "link.html#people",
+    "href": "link.html#people",
+    "title": "Link",
+    "section": "People",
+    "text": "People\n\nRyu Takahashi\nKiri Kuroda"
   },
   {
     "objectID": "link.html#その他",

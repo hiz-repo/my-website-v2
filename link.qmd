@@ -12,6 +12,7 @@ about:
 - [GitHub](https://github.com/hiz-repo)
 - [researchmap](https://researchmap.jp/hsuganuma)
 
+
 ## 所属
 
 - [亀田達也研究室](http://www.tatsuyakameda.com/)
@@ -20,6 +21,14 @@ about:
 - [日本心理学会](https://psych.or.jp/)
 - [日本人間行動進化学会](https://www.hbesj.org/)
 
+
+## People
+
+- [Ryu Takahashi](https://ryu-thakahashi.github.io/)
+- [Kiri Kuroda](https://kirikuroda.com/)
+
+
 ## その他
 
 - [東大ホースメンクラブ](https://ameblo.jp/ut-horsemen/)
+

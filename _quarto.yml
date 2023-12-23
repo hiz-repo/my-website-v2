@@ -13,8 +13,7 @@ website:
   favicon: assets/img/favicon.ico
   navbar:
     right:
-      - bio.qmd
-      - publications.qmd
+      - about.qmd
       - blog.qmd
       - link.qmd
       - icon: twitter
@@ -27,7 +26,7 @@ website:
         file: index-e.qmd
       - text: 日本語
         file: index.qmd
-  page-footer: '© Copyright 2023 Hidezo Suganuma. <br>Except where otherwise noted, content on this site is licensed under <a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/">CC-BY-NC</a>.<br> For privacy policy and other terms, click <a href="/terms.html">here</a>.'
+  page-footer: '© Copyright 2023 Hidezo Suganuma. <br>Except where otherwise noted, content on this site is licensed under <a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/">CC BY-NC</a>.<br> For privacy policy and other terms, click <a href="/terms.html">here</a>.'
   twitter-card: true
   google-analytics: G-Q8B6LZFM4W
 

@@ -5,7 +5,7 @@ author: "Hidezo Suganuma"
 date: "2023-12-07"
 categories:
   - Quarto
-  - website
+  - Website
   - GitHub Pages
 ---
 

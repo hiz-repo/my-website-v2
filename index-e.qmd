@@ -9,10 +9,16 @@ about:
 
 Hidezo SUGANUMA
 
-2nd year master's student<br>Department of Social Psychology, the University of Tokyo<br>
+2nd year master's student
+
+Department of Social Psychology, <br>
+The University of Tokyo<br>
+
 ORCID: [0000-0002-7561-992X](https://orcid.org/0000-0002-7561-992X)
 
 I am a graduate student specializing in social psychology.<br>
 I study behavioral and cognitive mechanisms for emergence of collective intelligence and cumulative culture in human societies.
+
+[CV](assets/pdf/CV.pdf)
 
 E-mail: suganuma.hiz[at]gmail.com

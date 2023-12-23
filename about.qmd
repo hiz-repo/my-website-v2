@@ -1,0 +1,88 @@
+---
+title: "About"
+about:
+  template: marquee
+
+---
+
+※詳細は[CV](assets/pdf/CV.pdf)をご覧ください．
+
+### Biography
+
+- 1999年　北海道[苫小牧市](https://www.city.tomakomai.hokkaido.jp/)にて生まれる
+- 2018年　[札幌日本大学高等学校](https://www.sapporonichidai.ed.jp/)（中高一貫コース）卒業
+- 2018年　東京大学（文科三類）入学
+- 2022年　東京大学文学部 卒業
+- 2022年　東京大学大学院人文社会系研究科 入学
+
+
+### 職歴・教育歴
+
+- ティーチング・アシスタント. 東京大学文学部，2022年4月-2023年1月.
+- ティーチング・アシスタント. 東京大学文学部，2023年10月-2024年1月.
+
+
+### 受賞・研究費
+
+- 若手研究者奨励賞（奨励金：100,000円）．日本社会心理学会，2022年．
+- 補助金助成（助成額：117,000円）．公益財団法人科学技術融合振興財団，2022年．
+
+
+### 資格など
+
+- 普通自動車運転免許
+- 社会調査士
+
+
+---
+## Favorite
+
+### Music
+
+<iframe allow="autoplay *; encrypted-media *; fullscreen *; clipboard-write" frameborder="0" height="450" style="width:100%;max-width:660px;overflow:hidden;border-radius:10px;" sandbox="allow-forms allow-popups allow-same-origin allow-scripts allow-storage-access-by-user-activation allow-top-navigation-by-user-activation" src="https://embed.music.apple.com/jp/playlist/misc/pl.u-PDb408gsLd1NB3g"></iframe>
+
+
+### Novel
+
+- 楠見朋彦『零歳の詩人』
+
+- C・ミエヴィル『都市と都市』
+
+- H. L. テリエ『異常【アノマリー】』
+
+
+### Manga
+
+- 川原泉『フロイト1/2』
+
+- 阿部共実『空が灰色だから』
+
+- 三島芳治『児玉まりあ文学集成』
+
+
+### Movie
+
+- 『THX1138』（[IMDb](https://www.imdb.com/title/tt0066434/)）
+
+- 『ギルバート・グレイプ』（[IMDb](https://www.imdb.com/title/tt0108550/)）
+
+- 『遠い空の向こうに』（[IMDb](https://www.imdb.com/title/tt0132477/)）
+
+
+### Anime
+
+- 『千と千尋の神隠し』（[IMDb](https://www.imdb.com/title/tt0245429/)）
+
+- 『パプリカ』（[IMDb](https://www.imdb.com/title/tt0851578/)）
+
+- 『Sonny Boy』（[IMDb](https://www.imdb.com/title/tt14642342/)）
+
+
+### Game
+
+- 『クロノ・トリガー』（[IGDb](https://www.igdb.com/games/chrono-trigger)）
+
+- 『ICO』（[IGDb](https://www.igdb.com/games/ico)）
+
+- 『メタルギアソリッド2 サンズ・オブ・リバティ』（[IGDb](https://www.igdb.com/games/metal-gear-solid-2-sons-of-liberty)）
+

@@ -28,95 +28,53 @@
     "text": "アクセス解析ツールについて\n当サイトではGoogleによるアクセス解析ツール「Googleアナリティクス」を利用しています．Googleアナリティクスはトラフィックデータの収集のためにクッキー（Cookie）を使います．トラフィックデータは匿名で収集されており，個人を特定するものではありません。\nクッキーの使用を望まない場合，ブラウザからクッキーを無効に設定できます．"
   },
   {
-    "objectID": "posts/remake-website/index.html",
-    "href": "posts/remake-website/index.html",
-    "title": "Quartoでサイトを作り直した",
+    "objectID": "posts/arima2023/index.html",
+    "href": "posts/arima2023/index.html",
+    "title": "勤勉なHomo Ludensになりたい",
     "section": "",
-    "text": "Quarto（https://quarto.org/）はPosit社が開発したオープンソースの文書作成ツールである．Pandocベースで汎用性が高く，RやPython，Juliaなどのコードを埋め込んだ文書を作成することができる．\n以前はJekyll+Github Pagesでサイトを作っていたが，コード付きのブログを書くのが少し手間だったのでこちらに乗り換えることにした．もともと実験データの解析や普段の文書作成で利用していたので慣れているというのもある．"
+    "text": "2023年の下半期は一度も競馬場に足を運ぶことなく終わりそうである．平生なら大晦日の東京2歳優駿牝馬を現地観戦して競馬納めとするところだが，あいにく今年は上京して初めて年末年始に帰省する予定なので，それも叶いそうもない．放蕩息子としては偶に元気な顔を見せるくらいしか孝行の術がないのでこういう機会を無下にするわけにもいかないが，夕映えのスタンドで寒風に身を震わせながら食らうモツ煮（ちょっと多すぎるくらいの七味を加えるのがキモだ）がなんだか恋しい．\nそれにしても，これだけ競馬場から足が遠のいたのは初めてのことだ．何らかの釈明を要する場面であれば（生きているとそういうこともあるのだ）いかにも不本意そうな顔を作りながら「いろいろ忙しくて…」と溢せばいいだけの話である．しかし実際のところは，たまに一日中遊べるような日でもまともな服に着替えて電車に乗るのをひたすらに億劫がり，自室でゴロゴロしながら競馬中継を眺めることに満足し続けてきた帰結にほかならない．言うなればこれは怠惰である．\n気の利いた世間の人々は「怠惰を求めて勤勉に行き着く」という言葉(さい & 星野, 1998)を「面倒ごとを回避したければ結局は勤勉に働くことが最良の道である」と解釈し，この陳腐な逆説を半ば教訓めいた形でありがたがっているように見える．それはそれとして「もっと楽をしたい」「嫌なことから逃れたい」と考えることは決して悪いことではなく，何ならそれは人類の技術や文化の発展を基礎づける重要なドライブとさえ言えるだろう．しかし現在の私の状態はかくのごとく礼賛できるものではなく，遊びにすら一生懸命になれないという意味で真に除かねばならぬ怠惰，Homo Ludens(Huizinga, 1955)としての実存を揺るがしかねない病弊である．仮に多くの人々がこの病に罹患しているとすれば，それは現代社会において消費すべき娯楽があふれかえっていることの裏返しではないかと直観するが，果たしてどうだろうか．\nいずれにしても来年こそは「怠惰なHomo Ludens」から脱却し，競馬に限らずとも眼の前の事物から最大限の愉悦を引き出せるような一級の「遊び人」を目指して，何事にも精進したいものである．そこにきて今年の有馬記念は絶対王者の引退と枠順の妙により大混戦の様相．ありがたいことに実に面白く予想しがいのあるレースになった．非常に悩ましいところだが，道中イン前からの抜け出しを期待して好枠の◎シャフリヤールから一発を狙いたい．\n＜2023有馬記念＞ ◎シャフリヤール ◯ジャスティンパレス ▲スルーセブンシーズ △タイトルホルダー △タスティエーラ △スターズオンアース ☆ライラック"
   },
   {
-    "objectID": "posts/remake-website/index.html#quartoとは",
-    "href": "posts/remake-website/index.html#quartoとは",
-    "title": "Quartoでサイトを作り直した",
-    "section": "",
-    "text": "Quarto（https://quarto.org/）はPosit社が開発したオープンソースの文書作成ツールである．Pandocベースで汎用性が高く，RやPython，Juliaなどのコードを埋め込んだ文書を作成することができる．\n以前はJekyll+Github Pagesでサイトを作っていたが，コード付きのブログを書くのが少し手間だったのでこちらに乗り換えることにした．もともと実験データの解析や普段の文書作成で利用していたので慣れているというのもある．"
-  },
-  {
-    "objectID": "posts/remake-website/index.html#公開と作成の手順",
-    "href": "posts/remake-website/index.html#公開と作成の手順",
-    "title": "Quartoでサイトを作り直した",
-    "section": "公開と作成の手順",
-    "text": "公開と作成の手順\n基本的には公式ガイドの通りにやればよい．\n\nローカルでウェブサイトを作成する\nまずプロジェクトを作成する．\n\n\nTerminal\n\nquarto create project blog mysite\n\nquarto previewコマンドでプレビュー可能．\n\n\nTerminal\n\ncd mysite\nquarto preview\n\n\n\nGithubにpushする\nGithub Pagesで公開するために_quarto.ymlを編集する．ここではdocs以下に出力するようにしている．\n\n\n_quarto.yml\n\nproject:\n  type: website\n  output-dir: docs\n\nGithub PagesではデフォルトでJekyllを使用することになっているので，余計な処理をしないようルートディレクトリに.nojekyllファイルを作成する．\n\n\nMac/Linux\n\ntouch .nojekyll\n\n\n\nWindows\n\ncopy NUL .nojekyll\n\n指定したディレクトリにHTMLを出力．\n\n\nTerminal\n\nquarto render\n\n無事にレンダリングされたら，Githubにpushしよう．\n\n\nTerminal\n\ngit add .\ngit commit -m \"first commit\"\ngit push origin master\n\n\n\nGithub Pagesで公開する\nSettings &gt; Pagesからdocsフォルダを公開するよう設定する．\n\nこれで完成．\n他にもquarto publishコマンドで公開したり，Github Actionsで自動的にレンダリングするようにしたりできるが，今回は割愛．詳細は公式ガイドを参照すればよい．"
-  },
-  {
-    "objectID": "posts/remake-website/index.html#ポストを追加する",
-    "href": "posts/remake-website/index.html#ポストを追加する",
-    "title": "Quartoでサイトを作り直した",
-    "section": "ポストを追加する",
-    "text": "ポストを追加する\nポストを追加するにはposts以下に新たにディレクトリを追加し，その中にindex.qmdを作成する．ディレクトリ構成の例は以下の通り．\nmysite\n├── posts\n│   ├── post1\n│   │   └── index.qmd\n│   ├── post2\n│   │   └── index.qmd\n│   └── _metadata.yml\n├── _quarto.yml\n├── index.qmd\n└── blog.qmd\n以下のようにポスト内容を記述すればよい．\n\n\nmysite/posts/post1/index.qmd\n\n---\ntitle: \"My first post\"\ndescription: \"Post description\"\nauthor: \"John Doe\"\ndate: \"2023-12-06\"\ndate-modified: \"2023-12-07\"\ncategories:\n  - news\n  - code\n  - analysis\n---\n\nThis is my first post.\n\ncategoriesに適当な項目を指定することで各ポストにタグを付加することができる．デフォルトではquarto renderするたびにposts/以下の.qmdファイルが自動的にレンダリングされる．ブラウザから/blogにアクセスすると，投稿がリストアップされていることを確認できる．"
-  },
-  {
-    "objectID": "posts/remake-website/index.html#まとめ",
-    "href": "posts/remake-website/index.html#まとめ",
-    "title": "Quartoでサイトを作り直した",
-    "section": "まとめ",
-    "text": "まとめ\nせっかくサイトを整備したのでこれからブログ投稿をたくさんしていきたいですね．\nいい加減にプロフィール画像を実家の猫から変えなければ…"
+    "objectID": "posts/arima2023/index.html#references",
+    "href": "posts/arima2023/index.html#references",
+    "title": "勤勉なHomo Ludensになりたい",
+    "section": "References",
+    "text": "References\n\n\nHuizinga, J. (1955). Homo ludens: A study of the Play-Element in culture. Beacon Press.\n\n\nさいふうめい., & 星野泰視. (1998). 哲也-雀聖と呼ばれた男（３）. 講談社."
   },
   {
     "objectID": "index.html",
     "href": "index.html",
     "title": "Hidezo Suganuma",
     "section": "",
-    "text": "菅沼 秀蔵\n東京大学大学院人文社会系研究科 修士課程2年 ORCID: 0000-0002-7561-992X\n社会心理学を専攻する大学院生です．行動実験・計算論モデリング・計算機シミュレーションなどの手法を用いて，社会的な情報共有を通じて集合知や累積的文化が創発するための認知・行動的なメカニズムに関する研究を行っています．\nE-mail: suganuma.hiz[at]gmail.com"
+    "text": "菅沼 秀蔵\n東京大学大学院人文社会系研究科 修士課程2年\nORCID: 0000-0002-7561-992X\n社会心理学を専攻する大学院生です．行動実験・計算論モデリング・計算機シミュレーションなどの手法を用いて，社会的な情報共有を通じて集合知や累積的文化が創発するための認知・行動的なメカニズムに関する研究を行っています．\nCV\nE-mail: suganuma.hiz[at]gmail.com"
   },
   {
     "objectID": "blog.html",
     "href": "blog.html",
     "title": "Blog",
     "section": "",
-    "text": "Quartoでサイトを作り直した\n\n\n\n\n\n\n\nQuarto\n\n\nwebsite\n\n\nGitHub Pages\n\n\n\n\n個人サイトをQuarto+GitHub Pagesで作り直してみました．\n\n\n\n\n\n\nDec 7, 2023\n\n\nHidezo Suganuma\n\n\n\n\n\n\nNo matching items"
+    "text": "勤勉なHomo Ludensになりたい\n\n\n\n\n\n\n\n雑記\n\n\n競馬\n\n\n有馬記念\n\n\n\n\n有馬記念に寄せて．\n\n\n\n\n\n\nDec 24, 2023\n\n\nHidezo Suganuma\n\n\n\n\n\n\n  \n\n\n\n\nQuartoでサイトを作り直した\n\n\n\n\n\n\n\nQuarto\n\n\nWebsite\n\n\nGitHub Pages\n\n\n\n\n個人サイトをQuarto+GitHub Pagesで作り直してみました．\n\n\n\n\n\n\nDec 7, 2023\n\n\nHidezo Suganuma\n\n\n\n\n\n\nNo matching items"
   },
   {
-    "objectID": "bio.html",
-    "href": "bio.html",
-    "title": "Biography",
+    "objectID": "about.html",
+    "href": "about.html",
+    "title": "About",
     "section": "",
-    "text": "1999年　北海道苫小牧市にて生まれる\n2018年　札幌日本大学高等学校（中高一貫コース）卒業\n2018年　東京大学（文科三類）入学\n2022年　東京大学文学部 卒業\n2022年　東京大学大学院人文社会系研究科 入学"
+    "text": "※詳細はCVをご覧ください．"
   },
   {
-    "objectID": "bio.html#職歴教育歴",
-    "href": "bio.html#職歴教育歴",
-    "title": "Biography",
-    "section": "職歴・教育歴",
-    "text": "職歴・教育歴\n\nティーチング・アシスタント. 東京大学文学部，2022年4月-2023年3月."
-  },
-  {
-    "objectID": "bio.html#受賞研究費",
-    "href": "bio.html#受賞研究費",
-    "title": "Biography",
-    "section": "受賞・研究費",
-    "text": "受賞・研究費\n\n若手研究者奨励賞（奨励金：100,000円）．日本社会心理学会，2022年．\n補助金助成（助成額：117,000円）．公益財団法人科学技術融合振興財団，2022年．"
-  },
-  {
-    "objectID": "bio.html#資格など",
-    "href": "bio.html#資格など",
-    "title": "Biography",
-    "section": "資格など",
-    "text": "資格など\n\n普通自動車運転免許\n社会調査士"
-  },
-  {
-    "objectID": "bio.html#趣味",
-    "href": "bio.html#趣味",
-    "title": "Biography",
-    "section": "趣味",
-    "text": "趣味"
+    "objectID": "about.html#favorite",
+    "href": "about.html#favorite",
+    "title": "About",
+    "section": "Favorite",
+    "text": "Favorite\n\nMusic\n\n\n\n\nNovel\n\n楠見朋彦『零歳の詩人』\nC・ミエヴィル『都市と都市』\nH. L. テリエ『異常【アノマリー】』\n\n\n\nManga\n\n川原泉『フロイト1/2』\n阿部共実『空が灰色だから』\n三島芳治『児玉まりあ文学集成』\n\n\n\nMovie\n\n『THX1138』（IMDb）\n『ギルバート・グレイプ』（IMDb）\n『遠い空の向こうに』（IMDb）\n\n\n\nAnime\n\n『千と千尋の神隠し』（IMDb）\n『パプリカ』（IMDb）\n『Sonny Boy』（IMDb）\n\n\n\nGame\n\n『クロノ・トリガー』（IGDb）\n『ICO』（IGDb）\n『メタルギアソリッド2 サンズ・オブ・リバティ』（IGDb）"
   },
   {
     "objectID": "index-e.html",
     "href": "index-e.html",
     "title": "Hidezo Suganuma",
     "section": "",
-    "text": "Hidezo SUGANUMA\n2nd year master’s studentDepartment of Social Psychology, the University of Tokyo ORCID: 0000-0002-7561-992X\nI am a graduate student specializing in social psychology. I study behavioral and cognitive mechanisms for emergence of collective intelligence and cumulative culture in human societies.\nE-mail: suganuma.hiz[at]gmail.com"
+    "text": "Hidezo SUGANUMA\n2nd year master’s student\nDepartment of Social Psychology,  The University of Tokyo\nORCID: 0000-0002-7561-992X\nI am a graduate student specializing in social psychology. I study behavioral and cognitive mechanisms for emergence of collective intelligence and cumulative culture in human societies.\nCV\nE-mail: suganuma.hiz[at]gmail.com"
   },
   {
     "objectID": "link.html",
@@ -154,31 +112,38 @@
     "text": "その他\n\n東大ホースメンクラブ"
   },
   {
-    "objectID": "publications.html",
-    "href": "publications.html",
-    "title": "Publications",
+    "objectID": "posts/remake-website/index.html",
+    "href": "posts/remake-website/index.html",
+    "title": "Quartoでサイトを作り直した",
     "section": "",
-    "text": "Suganuma et al. About social learning in an informaton foraging task. (drafting the manuscript)"
+    "text": "Quarto（https://quarto.org/）はPosit社が開発したオープンソースの文書作成ツールである．Pandocベースで汎用性が高く，RやPython，Juliaなどのコードを埋め込んだ文書を作成することができる．\n以前はJekyll+Github Pagesでサイトを作っていたが，コード付きのブログを書くのが少し手間だったのでこちらに乗り換えることにした．もともと実験データの解析や普段の文書作成で利用していたので慣れているというのもある．"
   },
   {
-    "objectID": "publications.html#in-preparation",
-    "href": "publications.html#in-preparation",
-    "title": "Publications",
+    "objectID": "posts/remake-website/index.html#quartoとは",
+    "href": "posts/remake-website/index.html#quartoとは",
+    "title": "Quartoでサイトを作り直した",
     "section": "",
-    "text": "Suganuma et al. About social learning in an informaton foraging task. (drafting the manuscript)"
+    "text": "Quarto（https://quarto.org/）はPosit社が開発したオープンソースの文書作成ツールである．Pandocベースで汎用性が高く，RやPython，Juliaなどのコードを埋め込んだ文書を作成することができる．\n以前はJekyll+Github Pagesでサイトを作っていたが，コード付きのブログを書くのが少し手間だったのでこちらに乗り換えることにした．もともと実験データの解析や普段の文書作成で利用していたので慣れているというのもある．"
   },
   {
-    "objectID": "publications.html#section",
-    "href": "publications.html#section",
-    "title": "Publications",
-    "section": "2023",
-    "text": "2023"
+    "objectID": "posts/remake-website/index.html#公開と作成の手順",
+    "href": "posts/remake-website/index.html#公開と作成の手順",
+    "title": "Quartoでサイトを作り直した",
+    "section": "公開と作成の手順",
+    "text": "公開と作成の手順\n基本的には公式ガイドの通りにやればよい．\n\nローカルでウェブサイトを作成する\nまずプロジェクトを作成する．\n\n\nTerminal\n\nquarto create project blog mysite\n\nquarto previewコマンドでプレビュー可能．\n\n\nTerminal\n\ncd mysite\nquarto preview\n\n\n\nGithubにpushする\nGithub Pagesで公開するために_quarto.ymlを編集する．ここではdocs以下に出力するようにしている．\n\n\n_quarto.yml\n\nproject:\n  type: website\n  output-dir: docs\n\nGithub PagesではデフォルトでJekyllを使用することになっているので，余計な処理をしないようルートディレクトリに.nojekyllファイルを作成する．\n\n\nMac/Linux\n\ntouch .nojekyll\n\n\n\nWindows\n\ncopy NUL .nojekyll\n\n指定したディレクトリにHTMLを出力．\n\n\nTerminal\n\nquarto render\n\n無事にレンダリングされたら，Githubにpushしよう．\n\n\nTerminal\n\ngit add .\ngit commit -m \"first commit\"\ngit push origin master\n\n\n\nGithub Pagesで公開する\nSettings &gt; Pagesからdocsフォルダを公開するよう設定する．\n\nこれで完成．\n他にもquarto publishコマンドで公開したり，Github Actionsで自動的にレンダリングするようにしたりできるが，今回は割愛．詳細は公式ガイドを参照すればよい．"
   },
   {
-    "objectID": "publications.html#section-1",
-    "href": "publications.html#section-1",
-    "title": "Publications",
-    "section": "2022",
-    "text": "2022\n\n菅沼秀蔵・内藤碧・片平健太郎・亀田達也. (2022). 先人にどう学ぶか：情報探索場面における系列的な社会学習の検討．日本人間行動進化学会第15回大会, 北海道大学(ポスター)．"
+    "objectID": "posts/remake-website/index.html#ポストを追加する",
+    "href": "posts/remake-website/index.html#ポストを追加する",
+    "title": "Quartoでサイトを作り直した",
+    "section": "ポストを追加する",
+    "text": "ポストを追加する\nポストを追加するにはposts以下に新たにディレクトリを追加し，その中にindex.qmdを作成する．ディレクトリ構成の例は以下の通り．\nmysite\n├── posts\n│   ├── post1\n│   │   └── index.qmd\n│   ├── post2\n│   │   └── index.qmd\n│   └── _metadata.yml\n├── _quarto.yml\n├── index.qmd\n└── blog.qmd\n以下のようにポスト内容を記述すればよい．\n\n\nmysite/posts/post1/index.qmd\n\n---\ntitle: \"My first post\"\ndescription: \"Post description\"\nauthor: \"John Doe\"\ndate: \"2023-12-06\"\ndate-modified: \"2023-12-07\"\ncategories:\n  - news\n  - code\n  - analysis\n---\n\nThis is my first post.\n\ncategoriesに適当な項目を指定することで各ポストにタグを付加することができる．デフォルトではquarto renderするたびにposts/以下の.qmdファイルが自動的にレンダリングされる．ブラウザから/blog.htmlにアクセスすると，投稿がリストアップされていることを確認できる．"
+  },
+  {
+    "objectID": "posts/remake-website/index.html#まとめ",
+    "href": "posts/remake-website/index.html#まとめ",
+    "title": "Quartoでサイトを作り直した",
+    "section": "まとめ",
+    "text": "まとめ\nせっかくサイトを整備したのでこれからブログ投稿をたくさんしていきたいですね．\nいい加減にプロフィール画像を実家の猫から変えなければ…"
   }
 ]

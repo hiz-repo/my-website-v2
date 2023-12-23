@@ -1,5 +1,6 @@
 ---
 title: "Blog"
+description: "研究の備忘録や技術系の記事，趣味に関する文章を不定期で投稿します．"
 listing:
   contents: posts
   sort: "date desc"

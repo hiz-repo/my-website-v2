@@ -1,2 +1,6 @@
 /.quarto/
 ignore
+env
+renv
+
+/env/

@@ -2,5 +2,7 @@
 ignore
 env
 renv
-
+jenv
+.vdoc*
+*_files
 /env/

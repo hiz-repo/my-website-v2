@@ -28,53 +28,32 @@
     "text": "アクセス解析ツールについて\n当サイトではGoogleによるアクセス解析ツール「Googleアナリティクス」を利用しています．Googleアナリティクスはトラフィックデータの収集のためにクッキー（Cookie）を使います．トラフィックデータは匿名で収集されており，個人を特定するものではありません。\nクッキーの使用を望まない場合，ブラウザからクッキーを無効に設定できます．"
   },
   {
-    "objectID": "posts/arima2023/index.html",
-    "href": "posts/arima2023/index.html",
-    "title": "勤勉なHomo Ludensになりたい",
+    "objectID": "posts/julia-bandit-tutorial/index.html",
+    "href": "posts/julia-bandit-tutorial/index.html",
+    "title": "【Julia】2腕バンディットシミュレーションの実装",
     "section": "",
-    "text": "2023年の下半期は一度も競馬場に足を運ぶことなく終わりそうである．平生なら大晦日の東京2歳優駿牝馬を現地観戦して競馬納めとするところだが，あいにく今年は上京して初めて年末年始に帰省する予定なので，それも叶いそうもない．放蕩息子としては偶に元気な顔を見せるくらいしか孝行の術がないのでこういう機会を無下にするわけにもいかないが，夕映えのスタンドで寒風に身を震わせながら食らうモツ煮（ちょっと多すぎるくらいの七味を加えるのがキモだ）がなんだか恋しい．\nそれにしても，これだけ競馬場から足が遠のいたのは初めてのことだ．何らかの釈明を要する場面であれば（生きているとそういうこともあるのだ）いかにも不本意そうな顔を作りながら「いろいろ忙しくて…」と溢せばいいだけの話である．しかし実際のところは，たまに一日中遊べるような日でもまともな服に着替えて電車に乗るのをひたすらに億劫がり，自室でゴロゴロしながら競馬中継を眺めることに満足し続けてきた帰結にほかならない．言うなればこれは怠惰である．\n気の利いた世間の人々は「怠惰を求めて勤勉に行き着く」という言葉(さい & 星野, 1998)を「面倒ごとを回避したければ結局は勤勉に働くことが最良の道である」と解釈し，この陳腐な逆説を半ば教訓めいた形でありがたがっているように見える．それはそれとして「もっと楽をしたい」「嫌なことから逃れたい」と考えることは決して悪いことではなく，何ならそれは人類の技術や文化の発展を基礎づける重要なドライブとさえ言えるだろう．しかし現在の私の状態はかくのごとく礼賛できるものではなく，遊びにすら一生懸命になれないという意味で真に除かねばならぬ怠惰，Homo Ludens(Huizinga, 1955)としての実存を揺るがしかねない病弊である．仮に多くの人々がこの病に罹患しているとすれば，それは現代社会において消費すべき娯楽があふれかえっていることの裏返しではないかと直観するが，果たしてどうだろうか．\nいずれにしても来年こそは「怠惰なHomo Ludens」から脱却し，競馬に限らずとも眼の前の事物から最大限の愉悦を引き出せるような一級の「遊び人」を目指して，何事にも精進したいものである．そこにきて今年の有馬記念は絶対王者の引退と枠順の妙により大混戦の様相．ありがたいことに実に面白く予想しがいのあるレースになった．非常に悩ましいところだが，道中イン前からの抜け出しを期待して好枠の◎シャフリヤールから一発を狙いたい．\n＜2023有馬記念＞ ◎シャフリヤール ◯ジャスティンパレス ▲スルーセブンシーズ △タイトルホルダー △タスティエーラ △スターズオンアース ☆ライラック"
+    "text": "3月に関学の清水先生が主催しているベイズ塾合宿というイベントに参加することになりました．プログラムを確認したところメインはJuliaのハンズオンということらしいので，予習のためにJuliaを使ってなんかやろうというのがこの記事の趣旨です．"
   },
   {
-    "objectID": "posts/arima2023/index.html#references",
-    "href": "posts/arima2023/index.html#references",
-    "title": "勤勉なHomo Ludensになりたい",
+    "objectID": "posts/julia-bandit-tutorial/index.html#シミュレーション",
+    "href": "posts/julia-bandit-tutorial/index.html#シミュレーション",
+    "title": "【Julia】2腕バンディットシミュレーションの実装",
+    "section": "シミュレーション",
+    "text": "シミュレーション\n今回はJuliaによる簡単なシミュレーションの実践として，2腕バンディット問題と強化学習モデル（Q-learning）を扱います．別に題材は何でもよかったのですが，シンプルに強化学習モデルおよび関連する研究が好きなので選んでみました．内容そのものは基本的に 片平 (2018) に準拠しています（名著です）．\n\nアルゴリズム\n2腕バンディット問題では，取りうる2つの行動から得られる報酬の期待値を経験を通じて学習する状況を考えます．具体的には，各時点\\(t\\)で選択した行動\\(a\\in\\{A, B\\}\\)について，実際に得られた報酬から計算される予測誤差をもとに期待値の予測（行動価値）\\(Q(a)\\)を更新します．ここではシンプルな学習則としてRescorla-Wagnerモデルを考えます．\n\\[\nQ_{t+1}(a) = Q_t(a) + \\alpha \\cdot (R_t - Q_t(a))\n\\]\nここでの\\(\\alpha(0\\leq\\alpha\\leq 1)\\)は学習率パラメータで，予測誤差による更新の幅をコントロールします．\\(R_t\\)は時点\\(t\\)で得られた報酬であり，今回は\\(0\\)か\\(1\\)の2値の状況を考えることにします．また，ここでは初期値を\\(Q_0(A)=Q_0(B)=0\\)とします．\n意思決定のモデルとしてはsoftmax選択を考えます．softmax選択は経験に基づく価値が高い選択肢を高確率で選びつつも，低確率で価値の低い選択肢を探索するような選択のルールであり，探索と活用のトレードオフ（exploration-exploitation tradeoff）のもとでの適切な選択モデルの一つです．ここでは2肢強制選択の状況なので，行動\\(A\\)を選択する確率はシグモイド関数を用いて\n\\[\nP(a=A) = \\frac{1}{1 + \\exp\\left(-\\beta \\cdot \\left(Q(A) - Q(B)\\right)\\right)}\n\\]\nと表せます．ここでの\\(\\beta(&gt;0)\\)は逆温度パラメータと呼ばれ，選択のランダム性をコントロールします．\n\n\nJuliaによる実装\n以下に2腕バンディット問題のシミュレーションを行うコードを示します．q_learning()関数で特定のパラメータのもとでのエージェントの行動選択と報酬を確率的に生成します．log_likelihood()関数は，パラメータ値と生成されたデータから計算した対数尤度を返します．\nJuliaは動的型付け言語なので明示的に型を指定しなくても動作しますが，指定することで計算効率が向上することがあります．以下のコードでは関数の引数や戻り値に対して型を指定しています．\n\nusing Random\nusing StatsBase\nRandom.seed!(777) # 乱数シードを設定\n\nT = 1000\n\n# Q学習のシミュレーション\nfunction q_learning(alpha::Float64, beta::Float64) :: Array{Array{Int, 1}, 1}\n    # あらかじめ型や配列の長さを指定しておく\n    Prob = Float64[0.3, 0.7]\n    c = Array{Int}(undef, T)\n    r = Array{Int}(undef, T)\n\n    # 0で初期化\n    Q = zeros(2)\n\n    for t = 1:T\n        # 選択確率を計算\n        p_A = 1 / (1 + exp( - beta * (Q[1] - Q[2])))\n\n        # [0,1]の一様乱数を使って行動を選択\n        if rand() &lt; p_A\n            c[t] = 1\n            r[t] = Int(rand() &lt; Prob[1])\n        else\n            c[t] = 2\n            r[t] = Int(rand() &lt; Prob[2])\n        end\n\n        # 行動価値の更新\n        Q[c[t]] = Q[c[t]] + alpha * (r[t] - Q[c[t]])\n\n        # 50試行ごとにパラメータ値をフリップ\n        if t % 50 == 0\n            Prob[1], Prob[2] = Prob[2], Prob[1]\n        end\n    end\n    return [c, r]\nend;\n\n# 対数尤度を計算\nfunction log_likelihood(params::Array{Float64}, c::Array{Int}, r::Array{Int}) :: Float64\n    alpha, beta = params\n    Q = zeros(2)\n    log_lik = 0.0\n    for t = 1:T\n        p_A = 1 / (1 + exp( - beta * (Q[1] - Q[2])))\n        log_lik += log(c[t] == 1 ? p_A : 1 - p_A)\n        Q[c[t]] = Q[c[t]] + alpha * (r[t] - Q[c[t]])\n    end\n    return log_lik\nend;\n\n今回は試行数を\\(T=1000\\)，2つの選択肢から報酬が得られる確率をそれぞれ\\(0.7,0.3\\)に設定し，50試行ごとに両者をフリップするようにしています．これは認知神経科学の領域で「確率的逆転学習課題」と呼ばれる状況で，環境変動下で行動を柔軟にスイッチできるかを検討する際によく用いられます（他の研究文脈では”restless multi-armed bandit”とも呼ぶようです）．\nそれでは実際にシミュレーションを行い，得られたデータをもとに最尤推定を行ってみましょう．\n\nusing Optim\n\nalpha = 0.3 # 学習率\nbeta = 2.0 # 逆温度\n\n# シミュレーション\nc, r = q_learning(alpha, beta)\n\n# 最尤推定\nf = params -&gt; -log_likelihood(params, c, r) # 無名関数は-&gt;で定義可能（JSライクですね）\nresult = optimize(\n    f, # 目的関数\n    [0.0, 0.0], # パラメータの下限\n    [1.0, 3.0], # パラメータの上限\n    [rand(), rand()], # 初期値\n    Fminbox(LBFGS()) # 最適化アルゴリズム\n)\n\n# 結果の表示\nprintln(\"Minimum: \", Optim.minimum(result))\nprintln(\"Minimizer: \", Optim.minimizer(result))\nprintln(\"AIC: \", 2 * Optim.minimum(result) + 2 * length(Optim.minimizer(result)))\n\nMinimum: 621.8124773861042\nMinimizer: [0.22076509555284965, 2.025622436705901]\nAIC: 1247.6249547722084\n\n\nパラメータ推定には最適化用のパッケージであるOptim.jlを使用しています（GitHub）．詳細な仕様はチェックしていませんが，勾配降下法やNelder-Mead法，ニュートン法などの一般的な最適化アルゴリズムはおおかた実装されているようです．ここではパラメータ範囲を制限したうえでL-BFGS法によりパラメータを最尤推定しています．ここでは\\(\\alpha\\)がやや過小推定されていますが，\\(\\beta\\)は概ね真値に近い値が得られました．\n\n\nパラメータリカバリ\nパラメータリカバリシミュレーションを行ってみましょう．ここでは適当な範囲の一様分布から生成した\\(\\alpha\\)と\\(\\beta\\)をもとにシミュレーションして推定値を求め，真の値と十分な相関が見られるかをチェックします．このあたりの手順は Wilson & Collins (2019) に詳しいです．\n\nN = 100\ntrue_alpha = rand(100)\ntrue_beta = rand(100) .* 3\n\nest_alpha = Array{Float64}(undef, N)\nest_beta = Array{Float64}(undef, N)\n\nfor i = 1:N\n    c, r = q_learning(true_alpha[i], true_beta[i])\n    f = params -&gt; -log_likelihood(params, c, r)\n    result = optimize(\n        f, \n        [0.0, 0.0], \n        [1.0, 3.0], \n        [rand(), rand()],\n        Fminbox(LBFGS())\n    )\n    est_alpha[i] = Optim.minimizer(result)[1]\n    est_beta[i] = Optim.minimizer(result)[2]\nend\n\n\n\n可視化してみる\n可視化にはPlotsパッケージが使用可能です．ここでは散布図を描画したうえでSpearmanの順位相関係数を計算してみます．\n\nusing Plots\n\n# パラメータリカバリの可視化\nplot(scatter(\n    true_alpha, \n    est_alpha, \n    title = \"Parameter Recovery\", \n    xlabel = \"True alpha\", \n    xlims = (0, 1),\n    ylabel = \"Estimated alpha\",\n    ylims = (0, 1),\n    aspect_ratio = :equal\n))\nplot!(0:0.1:1, 0:0.1:1, legend = false)\n\n\n\n\n  \n    \n  \n\n\n\n  \n    \n  \n\n\n\n  \n    \n  \n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nplot(scatter(\n    true_beta, \n    est_beta, \n    title = \"Parameter Recovery\", \n    xlabel = \"True beta\", \n    xlims = (0, 3),\n    ylabel = \"Estimated beta\",\n    ylims = (0, 3),\n    aspect_ratio = :equal\n))\nplot!(0:0.1:3, 0:0.1:3, legend = false)\n\n\n\n\n  \n    \n  \n\n\n\n  \n    \n  \n\n\n\n  \n    \n  \n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nprintln(\"alpha: \", corspearman(true_alpha, est_alpha))\nprintln(\"beta: \", corspearman(true_beta, est_beta))\n\nalpha: 0.8843410871359549\nbeta: 0.9474221113446927\n\n\n概ねちゃんとリカバリできているようでした．"
+  },
+  {
+    "objectID": "posts/julia-bandit-tutorial/index.html#まとめ",
+    "href": "posts/julia-bandit-tutorial/index.html#まとめ",
+    "title": "【Julia】2腕バンディットシミュレーションの実装",
+    "section": "まとめ",
+    "text": "まとめ\nJuliaはRやPython，MATLABなどと文法的に似ている部分も多く，いろいろな言語のいいとこ取りをして直観的にコードを記述できる点が魅力だと思います．Jupyterとの統合もバッチリで，特にPythonを日常的に使用している人は簡単にワークフローに取り入れられるのではと思います．\nとはいえ自分は生まれてこの方tidyverseの住人なので，習得できたとしても日常的に使うようになるかは微妙かもしれません．tidyverseの設計思想を踏襲したデータ分析用のパッケージとしてTidier.jlが開発中らしいのですが，RでもバックエンドでチューンされたC++が走っているので，日常のデータ分析で体感速度が大幅に向上するかどうかは微妙な気がします（ベンチマークテストではいちおう上回っているようですが）．そのあたりはハンズオンで紹介があると思うので，手を動かして感触を確かめたいと思います．\n今回のように単純なシミュレーションならRでも十分ですが，もっとrichなエージェントや複雑な環境を前提とすると計算の効率化のために細かい工夫が必要になってくると思います．計算資源も時間もない大学院生なので，そのあたりをJuliaで楽に解決できるようになると非常に嬉しいですね．機会があればもっと大規模なシミュレーションを実装してみたいと思います．"
+  },
+  {
+    "objectID": "posts/julia-bandit-tutorial/index.html#references",
+    "href": "posts/julia-bandit-tutorial/index.html#references",
+    "title": "【Julia】2腕バンディットシミュレーションの実装",
     "section": "References",
-    "text": "References\n\n\nHuizinga, J. (1955). Homo ludens: A study of the Play-Element in culture. Beacon Press.\n\n\nさいふうめい., & 星野泰視. (1998). 哲也-雀聖と呼ばれた男（３）. 講談社."
-  },
-  {
-    "objectID": "index.html",
-    "href": "index.html",
-    "title": "Hidezo Suganuma",
-    "section": "",
-    "text": "菅沼 秀蔵\n東京大学大学院人文社会系研究科 修士課程2年\nORCID: 0000-0002-7561-992X\n社会心理学を専攻する大学院生です．行動実験・計算論モデリング・計算機シミュレーションなどの手法を用いて，社会的な情報共有を通じて集合知や累積的文化が創発するための認知・行動的なメカニズムに関する研究を行っています．\nCV\nE-mail: suganuma.hiz[at]gmail.com"
-  },
-  {
-    "objectID": "blog.html",
-    "href": "blog.html",
-    "title": "Blog",
-    "section": "",
-    "text": "勤勉なHomo Ludensになりたい\n\n\n\n\n\n\n雑記\n\n\n競馬\n\n\n有馬記念\n\n\n\n有馬記念に寄せて．\n\n\n\n\n\nDec 24, 2023\n\n\nHidezo Suganuma\n\n\n\n\n\n\n\n\n\n\n\n\nQuartoでサイトを作り直した\n\n\n\n\n\n\nQuarto\n\n\nWebsite\n\n\nGitHub Pages\n\n\n\n個人サイトをQuarto+GitHub Pagesで作り直してみました．\n\n\n\n\n\nDec 7, 2023\n\n\nHidezo Suganuma\n\n\n\n\n\n\nNo matching items"
-  },
-  {
-    "objectID": "about.html",
-    "href": "about.html",
-    "title": "About",
-    "section": "",
-    "text": "※詳細はCVをご覧ください．"
-  },
-  {
-    "objectID": "about.html#favorite",
-    "href": "about.html#favorite",
-    "title": "About",
-    "section": "Favorite",
-    "text": "Favorite\n\nMusic\n\n\n\n\nNovel\n\n楠見朋彦『零歳の詩人』\nC・ミエヴィル『都市と都市』\nH. L. テリエ『異常【アノマリー】』\n\n\n\nManga\n\n川原泉『フロイト1/2』\n阿部共実『空が灰色だから』\n三島芳治『児玉まりあ文学集成』\n\n\n\nMovie\n\n『THX1138』（IMDb）\n『ギルバート・グレイプ』（IMDb）\n『遠い空の向こうに』（IMDb）\n\n\n\nAnime\n\n『千と千尋の神隠し』（IMDb）\n『パプリカ』（IMDb）\n『Sonny Boy』（IMDb）\n\n\n\nGame\n\n『クロノ・トリガー』（IGDb）\n『ICO』（IGDb）\n『メタルギアソリッド2 サンズ・オブ・リバティ』（IGDb）"
-  },
-  {
-    "objectID": "index-e.html",
-    "href": "index-e.html",
-    "title": "Hidezo Suganuma",
-    "section": "",
-    "text": "Hidezo SUGANUMA\n2nd year master’s student\nDepartment of Social Psychology,  The University of Tokyo\nORCID: 0000-0002-7561-992X\nI am a graduate student specializing in social psychology. I study behavioral and cognitive mechanisms for emergence of collective intelligence and cumulative culture in human societies.\nCV\nE-mail: suganuma.hiz[at]gmail.com"
+    "text": "References\n\n\nWilson, R. C., & Collins, A. G. (2019). Ten simple rules for the computational modeling of behavioral data. Elife, 8.\n\n\n片平健太郎. (2018). 行動データの計算論モデリング 強化学習モデルを例として. オーム社."
   },
   {
     "objectID": "link.html",
@@ -110,6 +89,55 @@
     "title": "Link",
     "section": "その他",
     "text": "その他\n\n東大ホースメンクラブ"
+  },
+  {
+    "objectID": "index-e.html",
+    "href": "index-e.html",
+    "title": "Hidezo Suganuma",
+    "section": "",
+    "text": "Hidezo SUGANUMA\n2nd year master’s student\nDepartment of Social Psychology,  The University of Tokyo\nORCID: 0000-0002-7561-992X\nI am a graduate student specializing in social psychology. I study behavioral and cognitive mechanisms for emergence of collective intelligence and cumulative culture in human societies.\nCV\nE-mail: suganuma.hiz[at]gmail.com"
+  },
+  {
+    "objectID": "about.html",
+    "href": "about.html",
+    "title": "About",
+    "section": "",
+    "text": "※詳細はCVをご覧ください．"
+  },
+  {
+    "objectID": "about.html#favorite",
+    "href": "about.html#favorite",
+    "title": "About",
+    "section": "Favorite",
+    "text": "Favorite\n\nMusic\n\n\n\n\nNovel\n\n楠見朋彦『零歳の詩人』\nC・ミエヴィル『都市と都市』\nH. L. テリエ『異常【アノマリー】』\n\n\n\nManga\n\n川原泉『フロイト1/2』\n阿部共実『空が灰色だから』\n三島芳治『児玉まりあ文学集成』\n\n\n\nMovie\n\n『THX1138』（IMDb）\n『ギルバート・グレイプ』（IMDb）\n『遠い空の向こうに』（IMDb）\n\n\n\nAnime\n\n『千と千尋の神隠し』（IMDb）\n『パプリカ』（IMDb）\n『Sonny Boy』（IMDb）\n\n\n\nGame\n\n『クロノ・トリガー』（IGDb）\n『ICO』（IGDb）\n『メタルギアソリッド2 サンズ・オブ・リバティ』（IGDb）"
+  },
+  {
+    "objectID": "blog.html",
+    "href": "blog.html",
+    "title": "Blog",
+    "section": "",
+    "text": "【Julia】2腕バンディットシミュレーションの実装\n\n\n\n\n\n\nJulia\n\n\nバンディット問題\n\n\n強化学習\n\n\n\nJuliaを使って2腕バンディット問題のシミュレーションを行ってみました．\n\n\n\n\n\nFeb 29, 2024\n\n\nHidezo Suganuma\n\n\n\n\n\n\n\n\n\n\n\n\n勤勉なHomo Ludensになりたい\n\n\n\n\n\n\n雑記\n\n\n競馬\n\n\n有馬記念\n\n\n\n有馬記念に寄せて．\n\n\n\n\n\nDec 24, 2023\n\n\nHidezo Suganuma\n\n\n\n\n\n\n\n\n\n\n\n\nQuartoでサイトを作り直した\n\n\n\n\n\n\nQuarto\n\n\nWebsite\n\n\nGitHub Pages\n\n\n\n個人サイトをQuarto+GitHub Pagesで作り直してみました．\n\n\n\n\n\nDec 7, 2023\n\n\nHidezo Suganuma\n\n\n\n\n\n\nNo matching items"
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Hidezo Suganuma",
+    "section": "",
+    "text": "菅沼 秀蔵\n東京大学大学院人文社会系研究科 修士課程2年\nORCID: 0000-0002-7561-992X\n社会心理学を専攻する大学院生です．行動実験・計算論モデリング・計算機シミュレーションなどの手法を用いて，社会的な情報共有を通じて集合知や累積的文化が創発するための認知・行動的なメカニズムに関する研究を行っています．\nCV\nE-mail: suganuma.hiz[at]gmail.com"
+  },
+  {
+    "objectID": "posts/arima2023/index.html",
+    "href": "posts/arima2023/index.html",
+    "title": "勤勉なHomo Ludensになりたい",
+    "section": "",
+    "text": "2023年の下半期は一度も競馬場に足を運ぶことなく終わりそうである．平生なら大晦日の東京2歳優駿牝馬を現地観戦して競馬納めとするところだが，あいにく今年は上京して初めて年末年始に帰省する予定なので，それも叶いそうもない．放蕩息子としては偶に元気な顔を見せるくらいしか孝行の術がないのでこういう機会を無下にするわけにもいかないが，夕映えのスタンドで寒風に身を震わせながら食らうモツ煮（ちょっと多すぎるくらいの七味を加えるのがキモだ）がなんだか恋しい．\nそれにしても，これだけ競馬場から足が遠のいたのは初めてのことだ．何らかの釈明を要する場面であれば（生きているとそういうこともあるのだ）いかにも不本意そうな顔を作りながら「いろいろ忙しくて…」と溢せばいいだけの話である．しかし実際のところは，たまに一日中遊べるような日でもまともな服に着替えて電車に乗るのをひたすらに億劫がり，自室でゴロゴロしながら競馬中継を眺めることに満足し続けてきた帰結にほかならない．言うなればこれは怠惰である．\n気の利いた世間の人々は「怠惰を求めて勤勉に行き着く」という言葉(さい & 星野, 1998)を「面倒ごとを回避したければ結局は勤勉に働くことが最良の道である」と解釈し，この陳腐な逆説を半ば教訓めいた形でありがたがっているように見える．それはそれとして「もっと楽をしたい」「嫌なことから逃れたい」と考えることは決して悪いことではなく，何ならそれは人類の技術や文化の発展を基礎づける重要なドライブとさえ言えるだろう．しかし現在の私の状態はかくのごとく礼賛できるものではなく，遊びにすら一生懸命になれないという意味で真に除かねばならぬ怠惰，Homo Ludens(Huizinga, 1955)としての実存を揺るがしかねない病弊である．仮に多くの人々がこの病に罹患しているとすれば，それは現代社会において消費すべき娯楽があふれかえっていることの裏返しではないかと直観するが，果たしてどうだろうか．\nいずれにしても来年こそは「怠惰なHomo Ludens」から脱却し，競馬に限らずとも眼の前の事物から最大限の愉悦を引き出せるような一級の「遊び人」を目指して，何事にも精進したいものである．そこにきて今年の有馬記念は絶対王者の引退と枠順の妙により大混戦の様相．ありがたいことに実に面白く予想しがいのあるレースになった．非常に悩ましいところだが，道中イン前からの抜け出しを期待して好枠の◎シャフリヤールから一発を狙いたい．\n＜2023有馬記念＞ ◎シャフリヤール ◯ジャスティンパレス ▲スルーセブンシーズ △タイトルホルダー △タスティエーラ △スターズオンアース ☆ライラック"
+  },
+  {
+    "objectID": "posts/arima2023/index.html#references",
+    "href": "posts/arima2023/index.html#references",
+    "title": "勤勉なHomo Ludensになりたい",
+    "section": "References",
+    "text": "References\n\n\nHuizinga, J. (1955). Homo ludens: A study of the Play-Element in culture. Beacon Press.\n\n\nさいふうめい., & 星野泰視. (1998). 哲也-雀聖と呼ばれた男（３）. 講談社."
   },
   {
     "objectID": "posts/remake-website/index.html",

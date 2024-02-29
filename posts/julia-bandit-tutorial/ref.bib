@@ -1,0 +1,84 @@
+
+% The entry below contains non-ASCII chars that could not be converted
+% to a LaTeX equivalent.
+@BOOK{2018-wg,
+  title     = "行動データの計算論モデリング 強化学習モデルを例として",
+  author    = "片平, 健太郎",
+  abstract  = "
+               人や動物の行動データの背後にある計算過程をモデル化し，行動の理解と予測につなげる。本書は，主に行動データの計算論モデリングの方法やその理論を初学者に向けて丁寧に解説します。実例として，心理学や神経科学の実験課題として良く用いられる，ギャンブル課題における選択行動データを扱います。本文では自分ではプログラミングをしない読者も想定して，プログラムは用いずに計算論モデリングの概要がイメージできるような解説をこころがけました。実際に計算論モデリングをするためのRコードやStanコードは付録やサポートページで解説しています。
+               はじめに 第1部 基礎編 第1章 計算論モデリングとは 1.1 計算論モデルとは何か 1.2 計算論モデリングとは何か 1.3
+               計算論モデリングにより何が得られるのか 1.4 シミュレーション 1.5 おわりに 第2章 計算論モデリングの基礎 2.1
+               強化学習モデル 2.1.1 数学的表記法 2.1.2 Rescorla-Wagnerモデル 2.1.3 行動選択 2.2
+               パラメータ推定 2.2.1 モデルで次の選択を予測する 2.2.2 最尤推定 2.3 モデルを比較する 2.4 おわりに 第3章
+               強化学習モデルを用いたデータ解析の事例 3.1 報酬予測誤差に対応する脳活動の解析 3.2 選択・学習における社会的影響 3.3
+               主観的価値の推定 3.4 人種偏見の効果 3.5 疾患に関する行動特性の計算論モデリング 3.5.1 抑うつと強化学習
+               3.5.2 アイオワギャンブリング課題 3.6 おわりに 第2部 実践編 第4章 パラメータ推定 4.1
+               最尤推定とベイズの定理に基づく推定 4.1.1 最尤推定 4.1.2 ベイズの定理 4.1.3 MAP推定 4.1.4
+               ベイズ推定 4.2 Q 学習モデルへの適用例 4.3 集団データ分析 4.3.1 個人レベル分析 4.3.2 固定効果分析
+               4.3.3 階層モデル 4.4 Q学習モデルを用いた集団データ分析のシミュレーション 4.5 どの推定法を選ぶか 4.6
+               おわりに 第5章 モデル選択 5.1 モデル選択の例 5.2 AICとBIC 5.3 モデル選択の考え方 5.4
+               予測の良さに基づくモデル選択 5.4.1 AIC 5.4.2 交差検証法 5.4.3 WAIC 5.5 ベイズ的なモデル選択法
+               5.5.1 モデルの事後確率 5.5.2 周辺尤度とは何か 5.5.3 周辺尤度では過剰に複雑なモデルにペナルティがかかる
+               5.5.4 周辺尤度の近似法 5.5.5 周辺尤度とベイズファクター 5.6 尤度比検定 5.7
+               集団データからモデル選択をする方法 5.7.1 個人レベル分析に基づくモデル選択 5.7.2 固定効果分析に基づくモデル選択
+               5.7.3 階層モデルに基づくモデル選択 5.7.4 モデルをランダム効果とした分析 5.8 おわりに 第6章
+               計算論モデリングに基づく統計分析 6.1 計算論モデリングに基づく統計分析の目的と方法 6.2 パラメータの群間比較 6.2.1
+               パラメータの点推定値を「観測値」として用いる方法 6.2.2 固定効果分析のモデル選択による群間比較 6.2.3
+               階層ベイズ法による群間比較 6.3 パラメータと連続的な特性との相関分析，回帰分析 6.3.1
+               パラメータの点推定値を「観測値」として用いる方法 6.3.2 階層モデルによる方法 6.4 モデル内のパラメータ間の比較 6.5
+               モデルの要素が必要か否かの検討 6.6 潜在変数をリグレッサーとして用いる 6.7 おわりに 第3部 理論・発展編 第7章
+               結果の解釈，計算論モデルの統計的性質の理解 7.1 パラメータの解釈 7.1.1 パラメータの推定可能性 7.2
+               シミュレーションでパラメータの効果を調べる 7.3 報酬履歴，選択履歴の効果 7.3.1 ロジスティック回帰モデル 7.3.2
+               ロジスティック回帰モデルとQ学習モデルの関係 7.4 モデルの誤設定の影響 7.5 おわりに 第8章
+               強化学習モデルの拡張・ベイズ推論モデル 8.1 行動選択ルールのバリエーション 8.2 選択の自己相関 8.3
+               価値計算についてのバリエーション 8.3.1 アクター・クリティック学習 8.3.2 Q学習とアクター・クリティック学習の相違点
+               8.4 状態遷移，遅延報酬を扱う 8.4.1 報酬関数 8.4.2 TD誤差学習 8.4.3 SARSA 8.4.4 Q学習
+               8.4.5 適格度トレース 8.5 モデルフリー強化学習とモデルベース強化学習 8.5.1 二段階マルコフ決定課題 8.6
+               パラメータを時間的に変化させる 8.7 ベイズ推定を計算論モデルとして用いる 8.7.1 1次元正規分布モデルのベイズ推論
+               8.7.2 カルマンフィルター 8.7.3 その他のベイズ推論モデル 8.8 おわりに 第9章 計算論モデリングの課題と発展
+               9.1 計算論モデルの役割 9.2 扱えるデータのタイプ 9.3 頻度主義とベイズ主義 9.4 新たな計算論モデルを構築する方法
+               9.4.1 規範的アプローチ 9.4.2 心理学的な理論に基づくアプローチ 9.4.3 神経科学的知見に基づくアプローチ
+               9.4.4 既存の計算論モデルを組み合わせる 9.5 モデルの統計的構造の理解 9.6 計算論モデリングの応用に向けて 9.7
+               計算論モデリングのためのソフトウェア，パッケージ 9.8 おわりに 付録A 数学的な補足 A.1 期待値 A.2 対数と指数関数
+               A.3 本書で用いる確率分布 A.3.1 正規分布 A.3.2 ベータ分布 A.3.3 ガンマ分布 A.4
+               コイントスに関する計算 A.4.1 $\mu$の最尤推定値の導出 A.4.2 $\mu$の事後分布の導出 A.5 WAIC
+               A.6 WBIC A.7 周辺尤度のラプラス近似 A.7.1 パラメータが一つの場合 A.7.2 パラメータが複数ある場合
+               A.8 信頼区間 A.9 正規分布モデルの事後分布の計算 A.10 正規分布の周辺化 付録B Rコード，シミュレーションの詳細
+               B.1 Rescorla-Wagnerモデルのシミュレーション B.2 Q学習モデルのシミュレーション B.3 MAP推定
+               B.4 ベイズ推定によるQ学習の推定 B.5 集団データのシミュレーション B.6 階層ベイズ B.7 WAIC,
+               WBICの計算 文献案内 参考文献 索引",
+  publisher = "オーム社",
+  month     =  sep,
+  year      =  2018,
+  language  = "ja"
+}
+
+@ARTICLE{Wilson2019-cg,
+  title    = "Ten simple rules for the computational modeling of behavioral
+              data",
+  author   = "Wilson, Robert C and Collins, Anne Ge",
+  abstract = "Computational modeling of behavior has revolutionized psychology
+              and neuroscience. By fitting models to experimental data we can
+              probe the algorithms underlying behavior, find neural correlates
+              of computational variables and better understand the effects of
+              drugs, illness and interventions. But with great power comes
+              great responsibility. Here, we offer ten simple rules to ensure
+              that computational modeling is used with care and yields
+              meaningful insights. In particular, we present a
+              beginner-friendly, pragmatic and details-oriented introduction on
+              how to relate models to data. What, exactly, can a model tell us
+              about the mind? To answer this, we apply our rules to the
+              simplest modeling techniques most accessible to beginning
+              modelers and illustrate them with examples and code available
+              online. However, most rules apply to more advanced techniques.
+              Our hope is that by following our guidelines, researchers will
+              avoid many pitfalls and unleash the power of computational
+              modeling on their own data.",
+  journal  = "Elife",
+  volume   =  8,
+  month    =  nov,
+  year     =  2019,
+  keywords = "computational modeling; model fitting; neuroscience;
+              reproducibility; validation",
+  language = "en"
+}

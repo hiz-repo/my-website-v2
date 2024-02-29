@@ -7,6 +7,9 @@ project:
   resources: 
     - CNAME
 
+execute:
+  freeze: true
+
 website:
   title: "Hidezo Suganuma"
   site-url: https://hidezosuganuma.com

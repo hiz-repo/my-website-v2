@@ -21,13 +21,6 @@
     "text": "リンク\n当サイトは基本的にリンクフリーです．リンクを行う場合の許可や連絡は不要です."
   },
   {
-    "objectID": "terms.html#アクセス解析ツールについて",
-    "href": "terms.html#アクセス解析ツールについて",
-    "title": "Terms",
-    "section": "アクセス解析ツールについて",
-    "text": "アクセス解析ツールについて\n当サイトではGoogleによるアクセス解析ツール「Googleアナリティクス」を利用しています．Googleアナリティクスはトラフィックデータの収集のためにクッキー（Cookie）を使います．トラフィックデータは匿名で収集されており，個人を特定するものではありません。\nクッキーの使用を望まない場合，ブラウザからクッキーを無効に設定できます．"
-  },
-  {
     "objectID": "posts/julia-bandit-tutorial/index.html",
     "href": "posts/julia-bandit-tutorial/index.html",
     "title": "【Julia】2腕バンディットシミュレーションの実装",

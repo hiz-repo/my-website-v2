@@ -15,7 +15,7 @@ about:
 
 ## 所属
 
-- [Kameda Reseach Group](http://www.tatsuyakameda.com/)
+- [Kameda Research Group](http://www.tatsuyakameda.com/)
 - [大坪庸介研究室](https://www.l.u-tokyo.ac.jp/~yohtsubo/)
 - [東京大学大学院人文社会系研究科 社会心理学研究室](http://www.utokyo-socpsy.com/index.html)
 - [日本社会心理学会](https://www.socialpsychology.jp/)
@@ -25,10 +25,13 @@ about:
 
 ## People
 
-- [Ryu Takahashi](https://ryu-thakahashi.github.io/)
-- [Kiri Kuroda](https://kirikuroda.com/)
+- [Aoi Naito](https://naito-aoi.github.io/)
 - [Kai Otsubo](https://kotsubo686.wixsite.com/kotsubo)
+- [Kiri Kuroda](https://kirikuroda.com/)
+- [Ryutaro Mori](https://ryutau.github.io/)
+- [Ryu Takahashi](https://ryu-thakahashi.github.io/)
 - [Tomoya Akiyama](https://ev-seisaku.com/tomoya-akiyama/)
+
 
 ## その他
 

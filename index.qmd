@@ -4,9 +4,16 @@ image: assets/img/me.jpg
 about:
   template: trestles
   image-shape: round
+  links:
+    - icon: twitter
+      text: twitter
+      href: https://twitter.com/hiz_suganuma
+    - icon: github
+      text: GitHub
+      href: https://github.com/hiz-repo
 ---
 
-菅沼 秀蔵
+# 菅沼 秀蔵
 
 東京大学大学院人文社会系研究科<br>
 博士課程1年

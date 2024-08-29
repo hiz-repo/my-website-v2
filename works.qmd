@@ -1,0 +1,14 @@
+---
+title: "Works"
+about:
+  template: marquee
+
+---
+
+## Academic Papers
+
+- Suganuma, H., Naito, A., Katahira, K. & Kameda, T. (in press). When to stop social learning from a predecessor in an information-foraging task. *Evolutionary Human Sciences*.
+
+
+## Others
+

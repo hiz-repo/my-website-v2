@@ -1,8 +1,16 @@
 /.quarto/
 ignore
 env
+.env
+venv
+.venv
+node_modules
+.venvi
+venvi
 renv
 jenv
 .vdoc*
 *_files
 /env/
+
+/.luarc.json

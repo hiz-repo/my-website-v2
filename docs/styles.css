@@ -5,6 +5,20 @@
   url("assets/fonts/tagetts_U.woff") format("woff")
 }
 
+@font-face {
+  font-family: "Noto Sans JP";
+  src: url('https://fonts.googleapis.com/css?family=Noto+Sans+JP:400,700&display=swap') format('woff2');
+}
+
+body {
+  font-family: "Noto Sans JP", sans-serif;
+}
+
 .navbar-title{
   font-family: "tagettes";
+}
+
+ul {
+  list-style-type: none;
+  padding: 0;
 }

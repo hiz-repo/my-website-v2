@@ -4,20 +4,23 @@ project:
   render:
     - "*.qmd"
     - "!ignore/"
+    - "!posts/template/*.qmd"
   resources: 
     - CNAME
+    - assets/
 
 execute:
   freeze: true
 
 website:
   title: "Hidezo Suganuma"
-  site-url: https://hidezosuganuma.com
-  site-path: "/"
+  description: "Hidezo Suganuma's personal website"
+  site-url: https://hidezosuganuma.net
   favicon: assets/img/favicon.ico
   navbar:
     right:
       - about.qmd
+      - works.qmd
       - blog.qmd
       - link.qmd
       - icon: twitter
@@ -26,7 +29,7 @@ website:
         href: https://www.linkedin.com/in/hidezo-suganuma-540b08277/
       - icon: github
         href: https://github.com/hiz-repo
-      - text: English
+      - text: EN
         file: index-e.qmd
       - text: 日本語
         file: index.qmd
@@ -40,3 +43,7 @@ format:
       dark: darkly
     css: styles.css
     highlight-style: github
+    max-width: 840px
+
+filters:
+  - optimize-images

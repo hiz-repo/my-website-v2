@@ -7,7 +7,7 @@ about:
 
 ※詳細は[CV](assets/pdf/CV.pdf)をご覧ください．
 
-### 経歴
+## 経歴
 
 - 1999年　北海道[苫小牧市](https://www.city.tomakomai.hokkaido.jp/)にて生まれる
 - 2018年　[札幌日本大学高等学校](https://www.sapporonichidai.ed.jp/)（中高一貫コース）卒業
@@ -22,56 +22,74 @@ about:
 - 学士（社会心理学）．東京大学，2022年．
 - 修士（社会心理学）．東京大学，2024年．
 
-### 職歴・教育歴
+## 職歴・教育歴
 
 - ティーチング・アシスタント. 東京大学文学部，2022年4月-2023年1月.
 - ティーチング・アシスタント. 東京大学文学部，2023年10月-2024年1月.
 
-### 受賞・研究費など
+## 受賞・研究費など
 
 - 若手研究者奨励賞（奨励金：100,000円）．日本社会心理学会，2022年．
 - 補助金助成（助成額：117,000円）．公益財団法人科学技術融合振興財団（FOST），2022年．
 - 研究費（支給額：年340,000円）．JST次世代研究者挑戦的研究プログラム「グリーントランスフォーメーションを先導する高度人材育成（SPRING GX）」，2024年．
 
-### 資格など
+## 資格など
 
 - 普通自動車運転免許
 - 社会調査士
 
 ---
-## Favorite
+# Favorite
 
-### Music
+## Music
 
-<iframe style="border-radius:12px" src="https://open.spotify.com/embed/playlist/3tNUOLb0lZ0v4eWCu7zq5k?utm_source=generator&theme=0" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+<iframe 
+  style="border-radius:12px" 
+  src="https://open.spotify.com/embed/playlist/3tNUOLb0lZ0v4eWCu7zq5k?utm_source=generator" 
+  width="100%" 
+  height="152" 
+  allowfullscreen="" 
+  allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+  loading="lazy">
+</iframe>
 
 
-### Novel
+## Book
 
-- 楠見朋彦『零歳の詩人』
-- C・ミエヴィル『都市と都市』
-- H. L. テリエ『異常【アノマリー】』
+- 楠見朋彦『零歳の詩人』（[Amazon](https://www.amazon.co.jp/dp/4087744485)）
+- J. P. ホーガン『星を継ぐもの』（[Amazon](https://www.amazon.co.jp/dp/B0C9GX6JKT)）
+- 北杜夫『どくとるマンボウ航海記』（[Amazon](https://www.amazon.co.jp/dp/B00CL6MWY8)）
+- J. ラヒリ『停電の夜に』（[Amazon](https://www.amazon.co.jp/dp/4102142118)）
+- S. ヘディン『中央アジア探検記』（[Amazon](https://www.amazon.co.jp/dp/B00VWP9IUK)）
 
-### Manga
+## Manga
 
-- 川原泉『フロイト1/2』
-- 阿部共実『空が灰色だから』
-- 三島芳治『児玉まりあ文学集成』
+- 川原泉『フロイト1/2』（[Amazon](https://www.amazon.co.jp/dp/4592883160)）
+- 阿部共実『空が灰色だから』（[Amazon](https://www.amazon.co.jp/dp/B00FR1KY9O)）
+- 三島芳治『児玉まりあ文学集成』（[Amazon](https://www.amazon.co.jp/dp/B07QMLPB3W)）
+- 相田裕『GUNSLINGER GIRL』（[Amazon](https://www.amazon.co.jp/dp/B00JXEFEDW)）
+- 手塚治虫『火の鳥』（[Amazon](https://www.amazon.co.jp/dp/B00JPXEAV8)）
 
-### Movie
+## Movie
 
 - 『THX1138』（[IMDb](https://www.imdb.com/title/tt0066434/)）
 - 『ギルバート・グレイプ』（[IMDb](https://www.imdb.com/title/tt0108550/)）
 - 『遠い空の向こうに』（[IMDb](https://www.imdb.com/title/tt0132477/)）
+- 『犬神家の一族』（市川崑）（[IMDb](https://www.imdb.com/title/tt0074691/)）
+- 『インセプション』（[IMDb](https://www.imdb.com/title/tt1375666/)）
 
-### Anime
+## Anime
 
 - 『千と千尋の神隠し』（[IMDb](https://www.imdb.com/title/tt0245429/)）
 - 『パプリカ』（[IMDb](https://www.imdb.com/title/tt0851578/)）
 - 『Sonny Boy』（[IMDb](https://www.imdb.com/title/tt14642342/)）
+- 『リズと青い鳥』（[IMDb](https://www.imdb.com/title/tt7089878/)）
+- 『東のエデン』（[IMDb](https://www.imdb.com/title/tt1415054/)）
 
-### Game
+## Game
 
 - 『クロノ・トリガー』（[IGDb](https://www.igdb.com/games/chrono-trigger)）
 - 『ICO』（[IGDb](https://www.igdb.com/games/ico)）
 - 『メタルギアソリッド2 サンズ・オブ・リバティ』（[IGDb](https://www.igdb.com/games/metal-gear-solid-2-sons-of-liberty)）
+- 『Humanity』（[IGDb](https://www.igdb.com/games/humanity)）
+- 『NieR: Automata』（[IGDb](https://www.igdb.com/games/nier-automata)）

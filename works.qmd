@@ -5,6 +5,8 @@ about:
 
 ---
 
+※詳細は[CV](assets/pdf/CV.pdf)をご覧ください．
+
 ## Academic Papers
 
 - Suganuma, H., Naito, A., Katahira, K. & Kameda, T. (in press). When to stop social learning from a predecessor in an information-foraging task. *Evolutionary Human Sciences*.

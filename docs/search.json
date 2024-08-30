@@ -1,17 +1,52 @@
 [
   {
+    "objectID": "posts/julia-bandit-tutorial/index.html",
+    "href": "posts/julia-bandit-tutorial/index.html",
+    "title": "【Julia】2腕バンディットシミュレーションの実装",
+    "section": "",
+    "text": "3月に関学の清水先生が主催しているベイズ塾合宿というイベントに参加することになりました．プログラムを確認したところメインはJuliaのハンズオンということらしいので，予習のためにJuliaを使ってなんかやろうというのがこの記事の趣旨です．"
+  },
+  {
+    "objectID": "posts/julia-bandit-tutorial/index.html#シミュレーション",
+    "href": "posts/julia-bandit-tutorial/index.html#シミュレーション",
+    "title": "【Julia】2腕バンディットシミュレーションの実装",
+    "section": "シミュレーション",
+    "text": "シミュレーション\n今回はJuliaによる簡単なシミュレーションの実践として，2腕バンディット問題と強化学習モデル（Q-learning）を扱います．別に題材は何でもよかったのですが，シンプルに強化学習モデルおよび関連する研究が好きなので選んでみました．内容そのものは基本的に 片平 (2018) に準拠しています（名著です）．\n\nアルゴリズム\n2腕バンディット問題では，取りうる2つの行動から得られる報酬の期待値を経験を通じて学習する状況を考えます．具体的には，各時点\\(t\\)で選択した行動\\(a\\in\\{A, B\\}\\)について，実際に得られた報酬から計算される予測誤差をもとに期待値の予測（行動価値）\\(Q(a)\\)を更新します．ここではシンプルな学習則としてRescorla-Wagnerモデルを考えます．\n\\[\nQ_{t+1}(a) = Q_t(a) + \\alpha \\cdot (R_t - Q_t(a))\n\\]\nここでの\\(\\alpha(0\\leq\\alpha\\leq 1)\\)は学習率パラメータで，予測誤差による更新の幅をコントロールします．\\(R_t\\)は時点\\(t\\)で得られた報酬であり，今回は\\(0\\)か\\(1\\)の2値の状況を考えることにします．また，ここでは初期値を\\(Q_0(A)=Q_0(B)=0\\)とします．\n意思決定のモデルとしてはsoftmax選択を考えます．softmax選択は経験に基づく価値が高い選択肢を高確率で選びつつも，低確率で価値の低い選択肢を探索するような選択のルールであり，探索と活用のトレードオフ（exploration-exploitation tradeoff）のもとでの適切な選択モデルの一つです．ここでは2肢強制選択の状況なので，行動\\(A\\)を選択する確率はシグモイド関数を用いて\n\\[\nP(a=A) = \\frac{1}{1 + \\exp\\left(-\\beta \\cdot \\left(Q(A) - Q(B)\\right)\\right)}\n\\]\nと表せます．ここでの\\(\\beta(&gt;0)\\)は逆温度パラメータと呼ばれ，選択のランダム性をコントロールします．\n\n\nJuliaによる実装\n以下に2腕バンディット問題のシミュレーションを行うコードを示します．q_learning()関数で特定のパラメータのもとでのエージェントの行動選択と報酬を確率的に生成します．log_likelihood()関数は，パラメータ値と生成されたデータから計算した対数尤度を返します．\nJuliaは動的型付け言語なので明示的に型を指定しなくても動作しますが，指定することで計算効率が向上することがあります．以下のコードでは関数の引数や戻り値に対して型を指定しています．\n\nusing Random\nusing StatsBase\nRandom.seed!(777) # 乱数シードを設定\n\nT = 1000\n\n# Q学習のシミュレーション\nfunction q_learning(alpha::Float64, beta::Float64) :: Array{Array{Int, 1}, 1}\n    # あらかじめ型や配列の長さを指定しておく\n    Prob = Float64[0.3, 0.7]\n    c = Array{Int}(undef, T)\n    r = Array{Int}(undef, T)\n\n    # 0で初期化\n    Q = zeros(2)\n\n    for t = 1:T\n        # 選択確率を計算\n        p_A = 1 / (1 + exp( - beta * (Q[1] - Q[2])))\n\n        # [0,1]の一様乱数を使って行動を選択\n        if rand() &lt; p_A\n            c[t] = 1\n            r[t] = Int(rand() &lt; Prob[1])\n        else\n            c[t] = 2\n            r[t] = Int(rand() &lt; Prob[2])\n        end\n\n        # 行動価値の更新\n        Q[c[t]] = Q[c[t]] + alpha * (r[t] - Q[c[t]])\n\n        # 50試行ごとにパラメータ値をフリップ\n        if t % 50 == 0\n            Prob[1], Prob[2] = Prob[2], Prob[1]\n        end\n    end\n    return [c, r]\nend;\n\n# 対数尤度を計算\nfunction log_likelihood(params::Array{Float64}, c::Array{Int}, r::Array{Int}) :: Float64\n    alpha, beta = params\n    Q = zeros(2)\n    log_lik = 0.0\n    for t = 1:T\n        p_A = 1 / (1 + exp( - beta * (Q[1] - Q[2])))\n        log_lik += log(c[t] == 1 ? p_A : 1 - p_A)\n        Q[c[t]] = Q[c[t]] + alpha * (r[t] - Q[c[t]])\n    end\n    return log_lik\nend;\n\n今回は試行数を\\(T=1000\\)，2つの選択肢から報酬が得られる確率をそれぞれ\\(0.7,0.3\\)に設定し，50試行ごとに両者をフリップするようにしています．これは認知神経科学の領域で「確率的逆転学習課題」と呼ばれる状況で，環境変動下で行動を柔軟にスイッチできるかを検討する際によく用いられます（他の研究文脈では”restless multi-armed bandit”とも呼ぶようです）．\nそれでは実際にシミュレーションを行い，得られたデータをもとに最尤推定を行ってみましょう．\n\nusing Optim\n\nalpha = 0.3 # 学習率\nbeta = 2.0 # 逆温度\n\n# シミュレーション\nc, r = q_learning(alpha, beta)\n\n# 最尤推定\nf = params -&gt; -log_likelihood(params, c, r) # 無名関数は-&gt;で定義可能（JSライクですね）\nresult = optimize(\n    f, # 目的関数\n    [0.0, 0.0], # パラメータの下限\n    [1.0, 3.0], # パラメータの上限\n    [rand(), rand()], # 初期値\n    Fminbox(LBFGS()) # 最適化アルゴリズム\n)\n\n# 結果の表示\nprintln(\"Minimum: \", Optim.minimum(result))\nprintln(\"Minimizer: \", Optim.minimizer(result))\nprintln(\"AIC: \", 2 * Optim.minimum(result) + 2 * length(Optim.minimizer(result)))\n\nMinimum: 621.8124773861044\nMinimizer: [0.2207650957441246, 2.0256224366220974]\nAIC: 1247.6249547722089\n\n\nパラメータ推定には最適化用のパッケージであるOptim.jlを使用しています（GitHub）．詳細な仕様はチェックしていませんが，勾配降下法やNelder-Mead法，ニュートン法などの一般的な最適化アルゴリズムはおおかた実装されているようです．ここではパラメータ範囲を制限したうえでL-BFGS法によりパラメータを最尤推定しています．ここでは\\(\\alpha\\)がやや過小推定されていますが，\\(\\beta\\)は概ね真値に近い値が得られました．\n\n\nパラメータリカバリ\nパラメータリカバリシミュレーションを行ってみましょう．ここでは適当な範囲の一様分布から生成した\\(\\alpha\\)と\\(\\beta\\)をもとにシミュレーションして推定値を求め，真の値と十分な相関が見られるかをチェックします．このあたりの手順は Wilson & Collins (2019) に詳しいです．\n\nN = 100\ntrue_alpha = rand(100)\ntrue_beta = rand(100) .* 3\n\nest_alpha = Array{Float64}(undef, N)\nest_beta = Array{Float64}(undef, N)\n\nfor i = 1:N\n    c, r = q_learning(true_alpha[i], true_beta[i])\n    f = params -&gt; -log_likelihood(params, c, r)\n    result = optimize(\n        f, \n        [0.0, 0.0], \n        [1.0, 3.0], \n        [rand(), rand()],\n        Fminbox(LBFGS())\n    )\n    est_alpha[i] = Optim.minimizer(result)[1]\n    est_beta[i] = Optim.minimizer(result)[2]\nend\n\n\n\n可視化してみる\n可視化にはPlotsパッケージが使用可能です．ここでは散布図を描画したうえでSpearmanの順位相関係数を計算してみます．\n\nusing Plots\n\n# パラメータリカバリの可視化\nplot(scatter(\n    true_alpha, \n    est_alpha, \n    title = \"Parameter Recovery\", \n    xlabel = \"True alpha\", \n    xlims = (0, 1),\n    ylabel = \"Estimated alpha\",\n    ylims = (0, 1),\n    aspect_ratio = :equal\n))\nplot!(0:0.1:1, 0:0.1:1, legend = false)\n\n\n\n\n  \n    \n  \n\n\n\n  \n    \n  \n\n\n\n  \n    \n  \n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nplot(scatter(\n    true_beta, \n    est_beta, \n    title = \"Parameter Recovery\", \n    xlabel = \"True beta\", \n    xlims = (0, 3),\n    ylabel = \"Estimated beta\",\n    ylims = (0, 3),\n    aspect_ratio = :equal\n))\nplot!(0:0.1:3, 0:0.1:3, legend = false)\n\n\n\n\n  \n    \n  \n\n\n\n  \n    \n  \n\n\n\n  \n    \n  \n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nprintln(\"alpha: \", corspearman(true_alpha, est_alpha))\nprintln(\"beta: \", corspearman(true_beta, est_beta))\n\nalpha: 0.8843550478290376\nbeta: 0.9473715792769292\n\n\n概ねちゃんとリカバリできているようでした．"
+  },
+  {
+    "objectID": "posts/julia-bandit-tutorial/index.html#まとめ",
+    "href": "posts/julia-bandit-tutorial/index.html#まとめ",
+    "title": "【Julia】2腕バンディットシミュレーションの実装",
+    "section": "まとめ",
+    "text": "まとめ\nJuliaはRやPython，MATLABなどと文法的に似ている部分も多く，いろいろな言語のいいとこ取りをして直観的にコードを記述できる点が魅力だと思います．Jupyterとの統合もバッチリで，特にPythonを日常的に使用している人は簡単にワークフローに取り入れられるのではと思います．\nとはいえ自分は生まれてこの方tidyverseの住人なので，習得できたとしても日常的に使うようになるかは微妙かもしれません．tidyverseの設計思想を踏襲したデータ分析用のパッケージとしてTidier.jlが開発中らしいのですが，RでもバックエンドでチューンされたC++が走っているので，日常のデータ分析で体感速度が大幅に向上するかどうかは微妙な気がします（ベンチマークテストではいちおう上回っているようですが）．そのあたりはハンズオンで紹介があると思うので，手を動かして感触を確かめたいと思います．\n今回のように単純なシミュレーションならRでも十分ですが，もっとrichなエージェントや複雑な環境を前提とすると計算の効率化のために細かい工夫が必要になってくると思います．計算資源も時間もない大学院生なので，そのあたりをJuliaで楽に解決できるようになると非常に嬉しいですね．機会があればもっと大規模なシミュレーションを実装してみたいと思います．"
+  },
+  {
+    "objectID": "posts/julia-bandit-tutorial/index.html#references",
+    "href": "posts/julia-bandit-tutorial/index.html#references",
+    "title": "【Julia】2腕バンディットシミュレーションの実装",
+    "section": "References",
+    "text": "References\n\n\nWilson, R. C., & Collins, A. G. (2019). Ten simple rules for the computational modeling of behavioral data. Elife, 8.\n\n\n片平健太郎. (2018). 行動データの計算論モデリング 強化学習モデルを例として. オーム社."
+  },
+  {
+    "objectID": "posts/derby2024/index.html",
+    "href": "posts/derby2024/index.html",
+    "title": "夢のない夢追人のために",
+    "section": "",
+    "text": "今年もダービーがやってくる．改めて述べるほどのことでもないが，近代西欧に端を発し人類が脈々と受け継いできた文化の粋にしてメルセンヌ・ツイスタよりもエレガントな乱数発生装置たる競馬，その本邦最高のレースであるところの日本ダービーである．\n毎年のように言っているが，この時期の浮遊した感覚は何にも代えがたいものがある．月曜にコンビニで競馬ブックとギャロップを買い込むだけで年甲斐もなく浮き足立ってしまうし，渋谷の街頭で配布されていた（いくぶん良識を失ったとしか思えない）JRAの宣伝ビラにさえも不思議と心をくすぐられる（一体ゴジラとダービーにどのような関係があるというのだろうか？）．かくのごとく平板な日常に適度な頻度で風穴を開けてくれる競馬を趣味としていることは，ハズレ馬券により敢え無く失った金銭のぶんを差し引いても幸せなことである．\n\n\n\n昨年買った記念馬券．当時は1年後に同条件の3勝クラスで圏外に飛ぶとは知る由もなかった\n\n\n\nこの時期はかつての活躍馬の仔がデビューするという報をよく聞くわけだが，そのたび月日の流れを実感させられる．我が身を顧みても4月に博士後期課程に入学し数日後にはついにアラサーに突入するというタイミングであるから，いろいろと思うところはあるのだ．同輩の諸君はみな生き馬の目を抜く産業界で着実にキャリアを重ねているので，深夜の院生室で出がらしの番茶を啜りながらSNSで彼ら彼女らの近況をつぶさにチェックしていると，どこか自分だけが取り残されたみたいな独りよがりな疎外感を覚えてしまいがちである．\n少なくとも表面的には人々は変わってしまったように映る．かつて難解な理論物理学の教科書の行間を埋めることに腐心していた友人は一流企業に就職し，教科書の代わりに自己啓発本と資格・検定対策本を携えてビジネスマンとしての栄達を目指している．あれだけパッパラパーだったサークルの先輩諸氏でさえも今ではすっかり所帯じみてしまい，NISAだiDeCoだなどとシャバいことを宣っている．彼ら彼女らが目に見える形で自らの人生を前に進めているのに引き換え，自分はウォーキングマシンを走り続けているように少しも前に進んでいる感触が得られていない．この手の悩みは世の大学院生なら誰しも抱えているものかもしれないが，齢二十五を目前にして素面で向き合えるほどの胆力は私は持ち合わせていないのだ．世の人々は大学生活を軽率に「人生の夏休み」みたいに喩えるのでなお苦しくなるが，実際は自分だけ8月31日をループするなかで周りが新学期を迎えるのを眺めている状況に等しいのだということを是非ご理解いただきたいものである．まあ，それも自分で選び取った道に他ならないのだが．\n\nそんな自分だから，なぜ大学で研究を続けているのかと自問することも多い．研究者のなかには自分の成果が人々の福利に貢献すると何の衒いもなく信じている人が多くいるようだが，私は未だそういった境地に達したことはない．本当に自分のやっていることが（投入された税金に見合うだけの）成果を生み出しているのかという疑問は常に胸の内から離れることはないし，仮に社会に貢献しているとしても，それを他でもない自分がやらなければならないという確信はそう簡単には得難いものである．したがって自分のなかに理由を見出すしかないわけだが，好奇心に貫徹された人間とは程遠い俗物であるという自覚を得ている以上，どうにも八方塞がりではないかという気がしてならない．夢のない夢追人，それがいまの私に対する過不足ない形容である．\nとはいえ，生きていれば背負うものは勝手に増えていってしまう．東大生は総じて富裕であるという世間のイメージとは乖離して，学部時代の頃から学費やら生活費などを自弁し続けてきて進学など望むべくもないという人は少なくなかった．彼らにしてみれば，私のように大学院で研究を続けるというのはこの上ない幸せと映っていたに違いない．道半ばで生命を絶たれたジョッキーに対して多くの同僚が「彼の思いを胸に騎乗を続けていきたい」と真率な哀悼の言葉を手向けるように，運良くリングに立ち続けられている人間は志を遂げられなかった人たちの思いを胸に全力でそこに立ち続けなければならないのだ．それは好むと好まざるにかかわらず我々が背負わなければならない責務であり，それこそが私がいまここにいる理由なのかもしれないと，最近はよく考えている．\n\nふと気がつけば発走まであと14時間という頃合いである．いまはこんなに脳髄が熱を持って眠れないほどなのだが，いざレースが終わってダービーの魔法が解けてしまえば独特の浮遊感はあっという間に虚空の彼方に消え去ってしまうことを私は知っている．そして，朧げに見える月に手を伸ばそうと暗い淵でもがきながら，同時にまだ水底に足がつかないのかと焦り続けているような，どっちつかずの情けない日常がまた続いていくのだ．夢から覚めたとき億万長者になっているか文無しになっているかは神のみぞ知るところだが，願わくば申請中の授業料免除が降りなくともメシを食っていけるだけの金を手にしていることを祈りたいものである．\n締切までに二転三転四転五転するのは目に見えているが，とりあえず本命は◎シックスペンスとさせていただきたい．一線級と未対戦ながら上位人気に推されているとなると疑いたくなるのが人情だが，どうみてもスロー濃厚なメンバー構成でポジション意識の高い川田Jと来れば，ここはしっかり好勝負に持ち込んでくれるはず．スタミナというよりはむしろトップスピードが求められる展開になると見込んで，ここは頭まで狙ってみたい．\n\n\n＜2024日本ダービー＞\n\n◎シックスペンス\n◯ジャスティンミラノ\n▲レガレイラ\n△コスモキュランダ\n△アーバンシック"
+  },
+  {
     "objectID": "works.html",
     "href": "works.html",
     "title": "Works",
     "section": "",
-    "text": "Suganuma, H., Naito, A., Katahira, K. & Kameda, T. (in press). When to stop social learning from a predecessor in an information-foraging task. Evolutionary Human Sciences."
+    "text": "※詳細はCVをご覧ください．"
   },
   {
     "objectID": "works.html#academic-papers",
     "href": "works.html#academic-papers",
     "title": "Works",
-    "section": "",
-    "text": "Suganuma, H., Naito, A., Katahira, K. & Kameda, T. (in press). When to stop social learning from a predecessor in an information-foraging task. Evolutionary Human Sciences."
+    "section": "Academic Papers",
+    "text": "Academic Papers\n\nSuganuma, H., Naito, A., Katahira, K. & Kameda, T. (in press). When to stop social learning from a predecessor in an information-foraging task. Evolutionary Human Sciences."
   },
   {
     "objectID": "works.html#others",
@@ -21,46 +56,39 @@
     "text": "Others"
   },
   {
-    "objectID": "posts/remake-website/index.html",
-    "href": "posts/remake-website/index.html",
-    "title": "Quartoでサイトを作り直した",
+    "objectID": "posts/arima2023/index.html",
+    "href": "posts/arima2023/index.html",
+    "title": "勤勉なHomo Ludensになりたい",
     "section": "",
-    "text": "Quarto（https://quarto.org/）はPosit社が開発したオープンソースの文書作成ツールである．Pandocベースで汎用性が高く，RやPython，Juliaなどのコードを埋め込んだ文書を作成することができる．\n以前はJekyll+Github Pagesでサイトを作っていたが，コード付きのブログを書くのが少し手間だったのでこちらに乗り換えることにした．もともと実験データの解析や普段の文書作成で利用していたので慣れているというのもある．"
+    "text": "2023年の下半期は一度も競馬場に足を運ぶことなく終わりそうである．平生なら大晦日の東京2歳優駿牝馬を現地観戦して競馬納めとするところだが，あいにく今年は上京して初めて年末年始に帰省する予定なので，それも叶いそうもない．放蕩息子としては偶に元気な顔を見せるくらいしか孝行の術がないのでこういう機会を無下にするわけにもいかないが，夕映えのスタンドで寒風に身を震わせながら食らうモツ煮（ちょっと多すぎるくらいの七味を加えるのがキモだ）がなんだか恋しい．\nそれにしても，これだけ競馬場から足が遠のいたのは初めてのことだ．何らかの釈明を要する場面であれば（生きているとそういうこともあるのだ）いかにも不本意そうな顔を作りながら「いろいろ忙しくて…」と溢せばいいだけの話である．しかし実際のところは，たまに一日中遊べるような日でもまともな服に着替えて電車に乗るのをひたすらに億劫がり，自室でゴロゴロしながら競馬中継を眺めることに満足し続けてきた帰結にほかならない．言うなればこれは怠惰である．\n気の利いた世間の人々は「怠惰を求めて勤勉に行き着く」という言葉 (さい & 星野, 1998) を「面倒ごとを回避したければ結局は勤勉に働くことが最良の道である」と解釈し，この陳腐な逆説を半ば教訓めいた形でありがたがっているように見える．それはそれとして「もっと楽をしたい」「嫌なことから逃れたい」と考えることは決して悪いことではなく，何ならそれは人類の技術や文化の発展を基礎づける重要なドライブとさえ言えるだろう．しかし現在の私の状態はかくのごとく礼賛できるものではなく，遊びにすら一生懸命になれないという意味で真に除かねばならぬ怠惰，Homo Ludens (Huizinga, 1955) としての実存を揺るがしかねない病弊である．仮に多くの人々がこの病に罹患しているとすれば，それは現代社会において消費すべき娯楽があふれかえっていることの裏返しではないかと直観するが，果たしてどうだろうか．\nいずれにしても来年こそは「怠惰なHomo Ludens」から脱却し，競馬に限らずとも眼の前の事物から最大限の愉悦を引き出せるような一級の「遊び人」を目指して，何事にも精進したいものである．そこにきて今年の有馬記念は絶対王者の引退と枠順の妙により大混戦の様相．ありがたいことに実に面白く予想しがいのあるレースになった．非常に悩ましいところだが，道中イン前からの抜け出しを期待して好枠の◎シャフリヤールから一発を狙いたい．"
   },
   {
-    "objectID": "posts/remake-website/index.html#quartoとは",
-    "href": "posts/remake-website/index.html#quartoとは",
-    "title": "Quartoでサイトを作り直した",
+    "objectID": "posts/arima2023/index.html#references",
+    "href": "posts/arima2023/index.html#references",
+    "title": "勤勉なHomo Ludensになりたい",
+    "section": "References",
+    "text": "References\n\n\nHuizinga, J. (1955). Homo ludens: A study of the Play-Element in culture. Beacon Press.\n\n\nさいふうめい., & 星野泰視. (1998). 哲也-雀聖と呼ばれた男（３）. 講談社."
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Hidezo Suganuma",
     "section": "",
-    "text": "Quarto（https://quarto.org/）はPosit社が開発したオープンソースの文書作成ツールである．Pandocベースで汎用性が高く，RやPython，Juliaなどのコードを埋め込んだ文書を作成することができる．\n以前はJekyll+Github Pagesでサイトを作っていたが，コード付きのブログを書くのが少し手間だったのでこちらに乗り換えることにした．もともと実験データの解析や普段の文書作成で利用していたので慣れているというのもある．"
+    "text": "菅沼 秀蔵\n東京大学大学院人文社会系研究科 博士課程1年\nORCID: 0000-0002-7561-992X\n社会心理学を専攻する大学院生です．行動実験・計算論モデリング・計算機シミュレーションなどの手法を用いて，社会的な情報共有を通じて集合知が生まれるための認知・行動的なメカニズムに関する研究を行っています．\nCV\nE-mail: suganuma.hiz[at]gmail.com"
   },
   {
-    "objectID": "posts/remake-website/index.html#公開と作成の手順",
-    "href": "posts/remake-website/index.html#公開と作成の手順",
-    "title": "Quartoでサイトを作り直した",
-    "section": "公開と作成の手順",
-    "text": "公開と作成の手順\n基本的には公式ガイドの通りにやればよい．\n\nローカルでウェブサイトを作成する\nまずプロジェクトを作成する．\n\n\nTerminal\n\nquarto create project blog mysite\n\nquarto previewコマンドでプレビュー可能．\n\n\nTerminal\n\ncd mysite\nquarto preview\n\n\n\nGithubにpushする\nGithub Pagesで公開するために_quarto.ymlを編集する．ここではdocs以下に出力するようにしている．\n\n\n_quarto.yml\n\nproject:\n  type: website\n  output-dir: docs\n\nGithub PagesではデフォルトでJekyllを使用することになっているので，余計な処理をしないようルートディレクトリに.nojekyllファイルを作成する．\n\n\nMac/Linux\n\ntouch .nojekyll\n\n\n\nWindows\n\ncopy NUL .nojekyll\n\n指定したディレクトリにHTMLを出力．\n\n\nTerminal\n\nquarto render\n\n無事にレンダリングされたら，Githubにpushしよう．\n\n\nTerminal\n\ngit add .\ngit commit -m \"first commit\"\ngit push origin master\n\n\n\nGithub Pagesで公開する\nSettings &gt; Pagesからdocsフォルダを公開するよう設定する．\n\nこれで完成．\n他にもquarto publishコマンドで公開したり，Github Actionsで自動的にレンダリングするようにしたりできるが，今回は割愛．詳細は公式ガイドを参照すればよい．"
-  },
-  {
-    "objectID": "posts/remake-website/index.html#ポストを追加する",
-    "href": "posts/remake-website/index.html#ポストを追加する",
-    "title": "Quartoでサイトを作り直した",
-    "section": "ポストを追加する",
-    "text": "ポストを追加する\nポストを追加するにはposts以下に新たにディレクトリを追加し，その中にindex.qmdを作成する．ディレクトリ構成の例は以下の通り．\nmysite\n├── posts\n│   ├── post1\n│   │   └── index.qmd\n│   ├── post2\n│   │   └── index.qmd\n│   └── _metadata.yml\n├── _quarto.yml\n├── index.qmd\n└── blog.qmd\n以下のようにポスト内容を記述すればよい．\n\n\nmysite/posts/post1/index.qmd\n\n---\ntitle: \"My first post\"\ndescription: \"Post description\"\nauthor: \"John Doe\"\ndate: \"2023-12-06\"\ndate-modified: \"2023-12-07\"\ncategories:\n  - news\n  - code\n  - analysis\n---\n\nThis is my first post.\n\ncategoriesに適当な項目を指定することで各ポストにタグを付加することができる．デフォルトではquarto renderするたびにposts/以下の.qmdファイルが自動的にレンダリングされる．ブラウザから/blog.htmlにアクセスすると，投稿がリストアップされていることを確認できる．"
-  },
-  {
-    "objectID": "posts/remake-website/index.html#まとめ",
-    "href": "posts/remake-website/index.html#まとめ",
-    "title": "Quartoでサイトを作り直した",
-    "section": "まとめ",
-    "text": "まとめ\nせっかくサイトを整備したのでこれからブログ投稿をたくさんしていきたいですね．\nいい加減にプロフィール画像を実家の猫から変えなければ…"
-  },
-  {
-    "objectID": "posts/derby2024/index.html",
-    "href": "posts/derby2024/index.html",
-    "title": "夢のない夢追人のために",
+    "objectID": "blog.html",
+    "href": "blog.html",
+    "title": "Blog",
     "section": "",
-    "text": "今年もダービーがやってくる．改めて述べるほどのことでもないが，近代西欧に端を発し人類が脈々と受け継いできた文化の粋にしてメルセンヌ・ツイスタよりもエレガントな乱数発生装置たる競馬，その本邦最高のレースであるところの日本ダービーである．\n毎年のように言っているが，この時期の浮遊した感覚は何にも代えがたいものがある．月曜にコンビニで競馬ブックとギャロップを買い込むだけで年甲斐もなく浮き足立ってしまうし，渋谷の街頭で配布されていた（いくぶん良識を失ったとしか思えない）JRAの宣伝ビラにさえも不思議と心をくすぐられる（一体ゴジラとダービーにどのような関係があるというのだろうか？）．かくのごとく平板な日常に適度な頻度で風穴を開けてくれる競馬を趣味としていることは，ハズレ馬券により敢え無く失った金銭のぶんを差し引いても幸せなことである．\n\n\n\n昨年買った記念馬券．当時は1年後に同条件の3勝クラスで圏外に飛ぶとは知る由もなかった\n\n\n\nこの時期はかつての活躍馬の仔がデビューするという報をよく聞くわけだが，そのたび月日の流れを実感させられる．我が身を顧みても4月に博士後期課程に入学し数日後にはついにアラサーに突入するというタイミングであるから，いろいろと思うところはあるのだ．同輩の諸君はみな生き馬の目を抜く産業界で着実にキャリアを重ねているので，深夜の院生室で出がらしの番茶を啜りながらSNSで彼ら彼女らの近況をつぶさにチェックしていると，どこか自分だけが取り残されたみたいな独りよがりな疎外感を覚えてしまいがちである．\n少なくとも表面的には人々は変わってしまったように映る．かつて難解な理論物理学の教科書の行間を埋めることに腐心していた友人は一流企業に就職し，教科書の代わりに自己啓発本と資格・検定対策本を携えてビジネスマンとしての栄達を目指している．あれだけパッパラパーだったサークルの先輩諸氏でさえも今ではすっかり所帯じみてしまい，NISAだiDeCoだなどとシャバいことを宣っている．彼ら彼女らが目に見える形で自らの人生を前に進めているのに引き換え，自分はウォーキングマシンを走り続けているように少しも前に進んでいる感触が得られていない．この手の悩みは世の大学院生なら誰しも抱えているものかもしれないが，齢二十五を目前にして素面で向き合えるほどの胆力は私は持ち合わせていないのだ．世の人々は大学生活を軽率に「人生の夏休み」みたいに喩えるのでなお苦しくなるが，実際は自分だけ8月31日をループするなかで周りが新学期を迎えるのを眺めている状況に等しいのだということを是非ご理解いただきたいものである．まあ，それも自分で選び取った道に他ならないのだが．\n\nそんな自分だから，なぜ大学で研究を続けているのかと自問することも多い．研究者のなかには自分の成果が人々の福利に貢献すると何の衒いもなく信じている人が多くいるようだが，私は未だそういった境地に達したことはない．本当に自分のやっていることが（投入された税金に見合うだけの）成果を生み出しているのかという疑問は常に胸の内から離れることはないし，仮に社会に貢献しているとしても，それを他でもない自分がやらなければならないという確信はそう簡単には得難いものである．したがって自分のなかに理由を見出すしかないわけだが，好奇心に貫徹された人間とは程遠い俗物であるという自覚を得ている以上，どうにも八方塞がりではないかという気がしてならない．夢のない夢追人，それがいまの私に対する過不足ない形容である．\nとはいえ，生きていれば背負うものは勝手に増えていってしまう．東大生は総じて富裕であるという世間のイメージとは乖離して，学部時代の頃から学費やら生活費などを自弁し続けてきて進学など望むべくもないという人は少なくなかった．彼らにしてみれば，私のように大学院で研究を続けるというのはこの上ない幸せと映っていたに違いない．道半ばで生命を絶たれたジョッキーに対して多くの同僚が「彼の思いを胸に騎乗を続けていきたい」と真率な哀悼の言葉を手向けるように，運良くリングに立ち続けられている人間は志を遂げられなかった人たちの思いを胸に全力でそこに立ち続けなければならないのだ．それは好むと好まざるにかかわらず我々が背負わなければならない責務であり，それこそが私がいまここにいる理由なのかもしれないと，最近はよく考えている．\n\nふと気がつけば発走まであと14時間という頃合いである．いまはこんなに脳髄が熱を持って眠れないほどなのだが，いざレースが終わってダービーの魔法が解けてしまえば独特の浮遊感はあっという間に虚空の彼方に消え去ってしまうことを私は知っている．そして，朧げに見える月に手を伸ばそうと暗い淵でもがきながら，同時にまだ水底に足がつかないのかと焦り続けているような，どっちつかずの情けない日常がまた続いていくのだ．夢から覚めたとき億万長者になっているか文無しになっているかは神のみぞ知るところだが，願わくば申請中の授業料免除が降りなくともメシを食っていけるだけの金を手にしていることを祈りたいものである．\n締切までに二転三転四転五転するのは目に見えているが，とりあえず本命は◎シックスペンスとさせていただきたい．一線級と未対戦ながら上位人気に推されているとなると疑いたくなるのが人情だが，どうみてもスロー濃厚なメンバー構成でポジション意識の高い川田Jと来れば，ここはしっかり好勝負に持ち込んでくれるはず．スタミナというよりはむしろトップスピードが求められる展開になると見込んで，ここは頭まで狙ってみたい．\n\n\n＜2024日本ダービー＞\n\n◎シックスペンス\n◯ジャスティンミラノ\n▲レガレイラ\n△コスモキュランダ\n△アーバンシック"
+    "text": "Order By\n       Default\n         \n          Title\n        \n         \n          Date - Oldest\n        \n         \n          Date - Newest\n        \n         \n          Author\n        \n     \n  \n    \n      \n      \n    \n\n\n\n\n\n\n\n\n\n\n夢のない夢追人のために\n\n\n\n\n\n\n雑記\n\n\n競馬\n\n\n日本ダービー\n\n\n\n2024日本ダービーに寄せて．\n\n\n\n\n\nMay 26, 2024\n\n\nHidezo Suganuma\n\n\n\n\n\n\n\n\n\n\n\n\n【Julia】2腕バンディットシミュレーションの実装\n\n\n\n\n\n\nJulia\n\n\nバンディット問題\n\n\n強化学習\n\n\n\nJuliaを使って2腕バンディット問題のシミュレーションを行ってみました．\n\n\n\n\n\nFeb 29, 2024\n\n\nHidezo Suganuma\n\n\n\n\n\n\n\n\n\n\n\n\n勤勉なHomo Ludensになりたい\n\n\n\n\n\n\n雑記\n\n\n競馬\n\n\n有馬記念\n\n\n\n有馬記念に寄せて．\n\n\n\n\n\nDec 24, 2023\n\n\nHidezo Suganuma\n\n\n\n\n\n\n\n\n\n\n\n\nQuartoでサイトを作り直した\n\n\n\n\n\n\nQuarto\n\n\nWebsite\n\n\nGitHub Pages\n\n\n\n個人サイトをQuarto+GitHub Pagesで作り直してみました．\n\n\n\n\n\nDec 7, 2023\n\n\nHidezo Suganuma\n\n\n\n\n\n\nNo matching items"
+  },
+  {
+    "objectID": "index-e.html",
+    "href": "index-e.html",
+    "title": "Hidezo Suganuma",
+    "section": "",
+    "text": "Hidezo SUGANUMA\nPh.D. Student\nDepartment of Social Psychology,  The University of Tokyo\nORCID: 0000-0002-7561-992X\nI am a graduate student specializing in social psychology. I study behavioral and cognitive mechanisms for emergence of collective intelligence and cumulative culture in human societies.\nCV\nE-mail: suganuma.hiz[at]gmail.com"
   },
   {
     "objectID": "link.html",
@@ -98,25 +126,39 @@
     "text": "その他\n\n東大ホースメンクラブ\n競馬ナイト：サークルの先輩が運営する競馬サイトです"
   },
   {
-    "objectID": "index-e.html",
-    "href": "index-e.html",
-    "title": "Hidezo Suganuma",
+    "objectID": "terms.html",
+    "href": "terms.html",
+    "title": "Terms",
     "section": "",
-    "text": "Hidezo SUGANUMA\nPh.D. Student\nDepartment of Social Psychology,  The University of Tokyo\nORCID: 0000-0002-7561-992X\nI am a graduate student specializing in social psychology. I study behavioral and cognitive mechanisms for emergence of collective intelligence and cumulative culture in human societies.\nCV\nE-mail: suganuma.hiz[at]gmail.com"
+    "text": "当サイトのリンクやバナーから移動したサイトで提供される情報やサービス等について一切の責任を負いません． 当サイトのコンテンツや情報については，可能なかぎり正確な情報を提供するように努めておりますが，正確性や安全性を保証するものではありません．\n当サイトに掲載された内容によって生じた損害等の一切の責任を負いかねます．"
+  },
+  {
+    "objectID": "terms.html#著作権",
+    "href": "terms.html#著作権",
+    "title": "Terms",
+    "section": "著作権",
+    "text": "著作権\n当サイトで掲載している文章や画像などは，断りがある箇所を除いてCC-BY-NC 4.0で提供されています．"
+  },
+  {
+    "objectID": "terms.html#リンク",
+    "href": "terms.html#リンク",
+    "title": "Terms",
+    "section": "リンク",
+    "text": "リンク\n当サイトは基本的にリンクフリーです．リンクを行う場合の許可や連絡は不要です."
   },
   {
     "objectID": "about.html",
     "href": "about.html",
     "title": "About",
     "section": "",
-    "text": "※詳細はCVをご覧ください．"
+    "text": "1999年　北海道苫小牧市にて生まれる\n2018年　札幌日本大学高等学校（中高一貫コース）卒業\n2018年　東京大学（文科三類）入学\n2022年　東京大学文学部 卒業\n2022年　東京大学大学院人文社会系研究科（博士前期課程） 入学\n2024年　東京大学大学院人文社会系研究科（博士前期課程） 修了\n2024年　東京大学大学院人文社会系研究科（博士後期課程） 入学"
   },
   {
     "objectID": "about.html#経歴",
     "href": "about.html#経歴",
     "title": "About",
-    "section": "経歴",
-    "text": "経歴\n\n1999年　北海道苫小牧市にて生まれる\n2018年　札幌日本大学高等学校（中高一貫コース）卒業\n2018年　東京大学（文科三類）入学\n2022年　東京大学文学部 卒業\n2022年　東京大学大学院人文社会系研究科（博士前期課程） 入学\n2024年　東京大学大学院人文社会系研究科（博士前期課程） 修了\n2024年　東京大学大学院人文社会系研究科（博士後期課程） 入学"
+    "section": "",
+    "text": "1999年　北海道苫小牧市にて生まれる\n2018年　札幌日本大学高等学校（中高一貫コース）卒業\n2018年　東京大学（文科三類）入学\n2022年　東京大学文学部 卒業\n2022年　東京大学大学院人文社会系研究科（博士前期課程） 入学\n2024年　東京大学大学院人文社会系研究科（博士前期課程） 修了\n2024年　東京大学大学院人文社会系研究科（博士後期課程） 入学"
   },
   {
     "objectID": "about.html#学位",
@@ -189,80 +231,38 @@
     "text": "Game\n\n『クロノ・トリガー』（IGDb）\n『ICO』（IGDb）\n『メタルギアソリッド2 サンズ・オブ・リバティ』（IGDb）\n『Humanity』（IGDb）\n『NieR: Automata』（IGDb）"
   },
   {
-    "objectID": "blog.html",
-    "href": "blog.html",
-    "title": "Blog",
+    "objectID": "posts/remake-website/index.html",
+    "href": "posts/remake-website/index.html",
+    "title": "Quartoでサイトを作り直した",
     "section": "",
-    "text": "Order By\n       Default\n         \n          Title\n        \n         \n          Date - Oldest\n        \n         \n          Date - Newest\n        \n         \n          Author\n        \n     \n  \n    \n      \n      \n    \n\n\n\n\n\n\n\n\n\n\n夢のない夢追人のために\n\n\n\n\n\n\n雑記\n\n\n競馬\n\n\n日本ダービー\n\n\n\n2024日本ダービーに寄せて．\n\n\n\n\n\nMay 26, 2024\n\n\nHidezo Suganuma\n\n\n\n\n\n\n\n\n\n\n\n\n【Julia】2腕バンディットシミュレーションの実装\n\n\n\n\n\n\nJulia\n\n\nバンディット問題\n\n\n強化学習\n\n\n\nJuliaを使って2腕バンディット問題のシミュレーションを行ってみました．\n\n\n\n\n\nFeb 29, 2024\n\n\nHidezo Suganuma\n\n\n\n\n\n\n\n\n\n\n\n\n勤勉なHomo Ludensになりたい\n\n\n\n\n\n\n雑記\n\n\n競馬\n\n\n有馬記念\n\n\n\n有馬記念に寄せて．\n\n\n\n\n\nDec 24, 2023\n\n\nHidezo Suganuma\n\n\n\n\n\n\n\n\n\n\n\n\nQuartoでサイトを作り直した\n\n\n\n\n\n\nQuarto\n\n\nWebsite\n\n\nGitHub Pages\n\n\n\n個人サイトをQuarto+GitHub Pagesで作り直してみました．\n\n\n\n\n\nDec 7, 2023\n\n\nHidezo Suganuma\n\n\n\n\n\n\nNo matching items"
+    "text": "Quarto（https://quarto.org/）はPosit社が開発したオープンソースの文書作成ツールである．Pandocベースで汎用性が高く，RやPython，Juliaなどのコードを埋め込んだ文書を作成することができる．\n以前はJekyll+Github Pagesでサイトを作っていたが，コード付きのブログを書くのが少し手間だったのでこちらに乗り換えることにした．もともと実験データの解析や普段の文書作成で利用していたので慣れているというのもある．"
   },
   {
-    "objectID": "index.html",
-    "href": "index.html",
-    "title": "Hidezo Suganuma",
+    "objectID": "posts/remake-website/index.html#quartoとは",
+    "href": "posts/remake-website/index.html#quartoとは",
+    "title": "Quartoでサイトを作り直した",
     "section": "",
-    "text": "菅沼 秀蔵\n東京大学大学院人文社会系研究科 博士課程1年\nORCID: 0000-0002-7561-992X\n社会心理学を専攻する大学院生です．行動実験・計算論モデリング・計算機シミュレーションなどの手法を用いて，社会的な情報共有を通じて集合知が生まれるための認知・行動的なメカニズムに関する研究を行っています．\nCV\nE-mail: suganuma.hiz[at]gmail.com"
+    "text": "Quarto（https://quarto.org/）はPosit社が開発したオープンソースの文書作成ツールである．Pandocベースで汎用性が高く，RやPython，Juliaなどのコードを埋め込んだ文書を作成することができる．\n以前はJekyll+Github Pagesでサイトを作っていたが，コード付きのブログを書くのが少し手間だったのでこちらに乗り換えることにした．もともと実験データの解析や普段の文書作成で利用していたので慣れているというのもある．"
   },
   {
-    "objectID": "posts/arima2023/index.html",
-    "href": "posts/arima2023/index.html",
-    "title": "勤勉なHomo Ludensになりたい",
-    "section": "",
-    "text": "2023年の下半期は一度も競馬場に足を運ぶことなく終わりそうである．平生なら大晦日の東京2歳優駿牝馬を現地観戦して競馬納めとするところだが，あいにく今年は上京して初めて年末年始に帰省する予定なので，それも叶いそうもない．放蕩息子としては偶に元気な顔を見せるくらいしか孝行の術がないのでこういう機会を無下にするわけにもいかないが，夕映えのスタンドで寒風に身を震わせながら食らうモツ煮（ちょっと多すぎるくらいの七味を加えるのがキモだ）がなんだか恋しい．\nそれにしても，これだけ競馬場から足が遠のいたのは初めてのことだ．何らかの釈明を要する場面であれば（生きているとそういうこともあるのだ）いかにも不本意そうな顔を作りながら「いろいろ忙しくて…」と溢せばいいだけの話である．しかし実際のところは，たまに一日中遊べるような日でもまともな服に着替えて電車に乗るのをひたすらに億劫がり，自室でゴロゴロしながら競馬中継を眺めることに満足し続けてきた帰結にほかならない．言うなればこれは怠惰である．\n気の利いた世間の人々は「怠惰を求めて勤勉に行き着く」という言葉 (さい & 星野, 1998) を「面倒ごとを回避したければ結局は勤勉に働くことが最良の道である」と解釈し，この陳腐な逆説を半ば教訓めいた形でありがたがっているように見える．それはそれとして「もっと楽をしたい」「嫌なことから逃れたい」と考えることは決して悪いことではなく，何ならそれは人類の技術や文化の発展を基礎づける重要なドライブとさえ言えるだろう．しかし現在の私の状態はかくのごとく礼賛できるものではなく，遊びにすら一生懸命になれないという意味で真に除かねばならぬ怠惰，Homo Ludens (Huizinga, 1955) としての実存を揺るがしかねない病弊である．仮に多くの人々がこの病に罹患しているとすれば，それは現代社会において消費すべき娯楽があふれかえっていることの裏返しではないかと直観するが，果たしてどうだろうか．\nいずれにしても来年こそは「怠惰なHomo Ludens」から脱却し，競馬に限らずとも眼の前の事物から最大限の愉悦を引き出せるような一級の「遊び人」を目指して，何事にも精進したいものである．そこにきて今年の有馬記念は絶対王者の引退と枠順の妙により大混戦の様相．ありがたいことに実に面白く予想しがいのあるレースになった．非常に悩ましいところだが，道中イン前からの抜け出しを期待して好枠の◎シャフリヤールから一発を狙いたい．"
+    "objectID": "posts/remake-website/index.html#公開と作成の手順",
+    "href": "posts/remake-website/index.html#公開と作成の手順",
+    "title": "Quartoでサイトを作り直した",
+    "section": "公開と作成の手順",
+    "text": "公開と作成の手順\n基本的には公式ガイドの通りにやればよい．\n\nローカルでウェブサイトを作成する\nまずプロジェクトを作成する．\n\n\nTerminal\n\nquarto create project blog mysite\n\nquarto previewコマンドでプレビュー可能．\n\n\nTerminal\n\ncd mysite\nquarto preview\n\n\n\nGithubにpushする\nGithub Pagesで公開するために_quarto.ymlを編集する．ここではdocs以下に出力するようにしている．\n\n\n_quarto.yml\n\nproject:\n  type: website\n  output-dir: docs\n\nGithub PagesではデフォルトでJekyllを使用することになっているので，余計な処理をしないようルートディレクトリに.nojekyllファイルを作成する．\n\n\nMac/Linux\n\ntouch .nojekyll\n\n\n\nWindows\n\ncopy NUL .nojekyll\n\n指定したディレクトリにHTMLを出力．\n\n\nTerminal\n\nquarto render\n\n無事にレンダリングされたら，Githubにpushしよう．\n\n\nTerminal\n\ngit add .\ngit commit -m \"first commit\"\ngit push origin master\n\n\n\nGithub Pagesで公開する\nSettings &gt; Pagesからdocsフォルダを公開するよう設定する．\n\nこれで完成．\n他にもquarto publishコマンドで公開したり，Github Actionsで自動的にレンダリングするようにしたりできるが，今回は割愛．詳細は公式ガイドを参照すればよい．"
   },
   {
-    "objectID": "posts/arima2023/index.html#references",
-    "href": "posts/arima2023/index.html#references",
-    "title": "勤勉なHomo Ludensになりたい",
-    "section": "References",
-    "text": "References\n\n\nHuizinga, J. (1955). Homo ludens: A study of the Play-Element in culture. Beacon Press.\n\n\nさいふうめい., & 星野泰視. (1998). 哲也-雀聖と呼ばれた男（３）. 講談社."
+    "objectID": "posts/remake-website/index.html#ポストを追加する",
+    "href": "posts/remake-website/index.html#ポストを追加する",
+    "title": "Quartoでサイトを作り直した",
+    "section": "ポストを追加する",
+    "text": "ポストを追加する\nポストを追加するにはposts以下に新たにディレクトリを追加し，その中にindex.qmdを作成する．ディレクトリ構成の例は以下の通り．\nmysite\n├── posts\n│   ├── post1\n│   │   └── index.qmd\n│   ├── post2\n│   │   └── index.qmd\n│   └── _metadata.yml\n├── _quarto.yml\n├── index.qmd\n└── blog.qmd\n以下のようにポスト内容を記述すればよい．\n\n\nmysite/posts/post1/index.qmd\n\n---\ntitle: \"My first post\"\ndescription: \"Post description\"\nauthor: \"John Doe\"\ndate: \"2023-12-06\"\ndate-modified: \"2023-12-07\"\ncategories:\n  - news\n  - code\n  - analysis\n---\n\nThis is my first post.\n\ncategoriesに適当な項目を指定することで各ポストにタグを付加することができる．デフォルトではquarto renderするたびにposts/以下の.qmdファイルが自動的にレンダリングされる．ブラウザから/blog.htmlにアクセスすると，投稿がリストアップされていることを確認できる．"
   },
   {
-    "objectID": "posts/julia-bandit-tutorial/index.html",
-    "href": "posts/julia-bandit-tutorial/index.html",
-    "title": "【Julia】2腕バンディットシミュレーションの実装",
-    "section": "",
-    "text": "3月に関学の清水先生が主催しているベイズ塾合宿というイベントに参加することになりました．プログラムを確認したところメインはJuliaのハンズオンということらしいので，予習のためにJuliaを使ってなんかやろうというのがこの記事の趣旨です．"
-  },
-  {
-    "objectID": "posts/julia-bandit-tutorial/index.html#シミュレーション",
-    "href": "posts/julia-bandit-tutorial/index.html#シミュレーション",
-    "title": "【Julia】2腕バンディットシミュレーションの実装",
-    "section": "シミュレーション",
-    "text": "シミュレーション\n今回はJuliaによる簡単なシミュレーションの実践として，2腕バンディット問題と強化学習モデル（Q-learning）を扱います．別に題材は何でもよかったのですが，シンプルに強化学習モデルおよび関連する研究が好きなので選んでみました．内容そのものは基本的に 片平 (2018) に準拠しています（名著です）．\n\nアルゴリズム\n2腕バンディット問題では，取りうる2つの行動から得られる報酬の期待値を経験を通じて学習する状況を考えます．具体的には，各時点\\(t\\)で選択した行動\\(a\\in\\{A, B\\}\\)について，実際に得られた報酬から計算される予測誤差をもとに期待値の予測（行動価値）\\(Q(a)\\)を更新します．ここではシンプルな学習則としてRescorla-Wagnerモデルを考えます．\n\\[\nQ_{t+1}(a) = Q_t(a) + \\alpha \\cdot (R_t - Q_t(a))\n\\]\nここでの\\(\\alpha(0\\leq\\alpha\\leq 1)\\)は学習率パラメータで，予測誤差による更新の幅をコントロールします．\\(R_t\\)は時点\\(t\\)で得られた報酬であり，今回は\\(0\\)か\\(1\\)の2値の状況を考えることにします．また，ここでは初期値を\\(Q_0(A)=Q_0(B)=0\\)とします．\n意思決定のモデルとしてはsoftmax選択を考えます．softmax選択は経験に基づく価値が高い選択肢を高確率で選びつつも，低確率で価値の低い選択肢を探索するような選択のルールであり，探索と活用のトレードオフ（exploration-exploitation tradeoff）のもとでの適切な選択モデルの一つです．ここでは2肢強制選択の状況なので，行動\\(A\\)を選択する確率はシグモイド関数を用いて\n\\[\nP(a=A) = \\frac{1}{1 + \\exp\\left(-\\beta \\cdot \\left(Q(A) - Q(B)\\right)\\right)}\n\\]\nと表せます．ここでの\\(\\beta(&gt;0)\\)は逆温度パラメータと呼ばれ，選択のランダム性をコントロールします．\n\n\nJuliaによる実装\n以下に2腕バンディット問題のシミュレーションを行うコードを示します．q_learning()関数で特定のパラメータのもとでのエージェントの行動選択と報酬を確率的に生成します．log_likelihood()関数は，パラメータ値と生成されたデータから計算した対数尤度を返します．\nJuliaは動的型付け言語なので明示的に型を指定しなくても動作しますが，指定することで計算効率が向上することがあります．以下のコードでは関数の引数や戻り値に対して型を指定しています．\n\nusing Random\nusing StatsBase\nRandom.seed!(777) # 乱数シードを設定\n\nT = 1000\n\n# Q学習のシミュレーション\nfunction q_learning(alpha::Float64, beta::Float64) :: Array{Array{Int, 1}, 1}\n    # あらかじめ型や配列の長さを指定しておく\n    Prob = Float64[0.3, 0.7]\n    c = Array{Int}(undef, T)\n    r = Array{Int}(undef, T)\n\n    # 0で初期化\n    Q = zeros(2)\n\n    for t = 1:T\n        # 選択確率を計算\n        p_A = 1 / (1 + exp( - beta * (Q[1] - Q[2])))\n\n        # [0,1]の一様乱数を使って行動を選択\n        if rand() &lt; p_A\n            c[t] = 1\n            r[t] = Int(rand() &lt; Prob[1])\n        else\n            c[t] = 2\n            r[t] = Int(rand() &lt; Prob[2])\n        end\n\n        # 行動価値の更新\n        Q[c[t]] = Q[c[t]] + alpha * (r[t] - Q[c[t]])\n\n        # 50試行ごとにパラメータ値をフリップ\n        if t % 50 == 0\n            Prob[1], Prob[2] = Prob[2], Prob[1]\n        end\n    end\n    return [c, r]\nend;\n\n# 対数尤度を計算\nfunction log_likelihood(params::Array{Float64}, c::Array{Int}, r::Array{Int}) :: Float64\n    alpha, beta = params\n    Q = zeros(2)\n    log_lik = 0.0\n    for t = 1:T\n        p_A = 1 / (1 + exp( - beta * (Q[1] - Q[2])))\n        log_lik += log(c[t] == 1 ? p_A : 1 - p_A)\n        Q[c[t]] = Q[c[t]] + alpha * (r[t] - Q[c[t]])\n    end\n    return log_lik\nend;\n\n今回は試行数を\\(T=1000\\)，2つの選択肢から報酬が得られる確率をそれぞれ\\(0.7,0.3\\)に設定し，50試行ごとに両者をフリップするようにしています．これは認知神経科学の領域で「確率的逆転学習課題」と呼ばれる状況で，環境変動下で行動を柔軟にスイッチできるかを検討する際によく用いられます（他の研究文脈では”restless multi-armed bandit”とも呼ぶようです）．\nそれでは実際にシミュレーションを行い，得られたデータをもとに最尤推定を行ってみましょう．\n\nusing Optim\n\nalpha = 0.3 # 学習率\nbeta = 2.0 # 逆温度\n\n# シミュレーション\nc, r = q_learning(alpha, beta)\n\n# 最尤推定\nf = params -&gt; -log_likelihood(params, c, r) # 無名関数は-&gt;で定義可能（JSライクですね）\nresult = optimize(\n    f, # 目的関数\n    [0.0, 0.0], # パラメータの下限\n    [1.0, 3.0], # パラメータの上限\n    [rand(), rand()], # 初期値\n    Fminbox(LBFGS()) # 最適化アルゴリズム\n)\n\n# 結果の表示\nprintln(\"Minimum: \", Optim.minimum(result))\nprintln(\"Minimizer: \", Optim.minimizer(result))\nprintln(\"AIC: \", 2 * Optim.minimum(result) + 2 * length(Optim.minimizer(result)))\n\nMinimum: 621.8124773861044\nMinimizer: [0.2207650957441246, 2.0256224366220974]\nAIC: 1247.6249547722089\n\n\nパラメータ推定には最適化用のパッケージであるOptim.jlを使用しています（GitHub）．詳細な仕様はチェックしていませんが，勾配降下法やNelder-Mead法，ニュートン法などの一般的な最適化アルゴリズムはおおかた実装されているようです．ここではパラメータ範囲を制限したうえでL-BFGS法によりパラメータを最尤推定しています．ここでは\\(\\alpha\\)がやや過小推定されていますが，\\(\\beta\\)は概ね真値に近い値が得られました．\n\n\nパラメータリカバリ\nパラメータリカバリシミュレーションを行ってみましょう．ここでは適当な範囲の一様分布から生成した\\(\\alpha\\)と\\(\\beta\\)をもとにシミュレーションして推定値を求め，真の値と十分な相関が見られるかをチェックします．このあたりの手順は Wilson & Collins (2019) に詳しいです．\n\nN = 100\ntrue_alpha = rand(100)\ntrue_beta = rand(100) .* 3\n\nest_alpha = Array{Float64}(undef, N)\nest_beta = Array{Float64}(undef, N)\n\nfor i = 1:N\n    c, r = q_learning(true_alpha[i], true_beta[i])\n    f = params -&gt; -log_likelihood(params, c, r)\n    result = optimize(\n        f, \n        [0.0, 0.0], \n        [1.0, 3.0], \n        [rand(), rand()],\n        Fminbox(LBFGS())\n    )\n    est_alpha[i] = Optim.minimizer(result)[1]\n    est_beta[i] = Optim.minimizer(result)[2]\nend\n\n\n\n可視化してみる\n可視化にはPlotsパッケージが使用可能です．ここでは散布図を描画したうえでSpearmanの順位相関係数を計算してみます．\n\nusing Plots\n\n# パラメータリカバリの可視化\nplot(scatter(\n    true_alpha, \n    est_alpha, \n    title = \"Parameter Recovery\", \n    xlabel = \"True alpha\", \n    xlims = (0, 1),\n    ylabel = \"Estimated alpha\",\n    ylims = (0, 1),\n    aspect_ratio = :equal\n))\nplot!(0:0.1:1, 0:0.1:1, legend = false)\n\n\n\n\n  \n    \n  \n\n\n\n  \n    \n  \n\n\n\n  \n    \n  \n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nplot(scatter(\n    true_beta, \n    est_beta, \n    title = \"Parameter Recovery\", \n    xlabel = \"True beta\", \n    xlims = (0, 3),\n    ylabel = \"Estimated beta\",\n    ylims = (0, 3),\n    aspect_ratio = :equal\n))\nplot!(0:0.1:3, 0:0.1:3, legend = false)\n\n\n\n\n  \n    \n  \n\n\n\n  \n    \n  \n\n\n\n  \n    \n  \n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nprintln(\"alpha: \", corspearman(true_alpha, est_alpha))\nprintln(\"beta: \", corspearman(true_beta, est_beta))\n\nalpha: 0.8843550478290376\nbeta: 0.9473715792769292\n\n\n概ねちゃんとリカバリできているようでした．"
-  },
-  {
-    "objectID": "posts/julia-bandit-tutorial/index.html#まとめ",
-    "href": "posts/julia-bandit-tutorial/index.html#まとめ",
-    "title": "【Julia】2腕バンディットシミュレーションの実装",
+    "objectID": "posts/remake-website/index.html#まとめ",
+    "href": "posts/remake-website/index.html#まとめ",
+    "title": "Quartoでサイトを作り直した",
     "section": "まとめ",
-    "text": "まとめ\nJuliaはRやPython，MATLABなどと文法的に似ている部分も多く，いろいろな言語のいいとこ取りをして直観的にコードを記述できる点が魅力だと思います．Jupyterとの統合もバッチリで，特にPythonを日常的に使用している人は簡単にワークフローに取り入れられるのではと思います．\nとはいえ自分は生まれてこの方tidyverseの住人なので，習得できたとしても日常的に使うようになるかは微妙かもしれません．tidyverseの設計思想を踏襲したデータ分析用のパッケージとしてTidier.jlが開発中らしいのですが，RでもバックエンドでチューンされたC++が走っているので，日常のデータ分析で体感速度が大幅に向上するかどうかは微妙な気がします（ベンチマークテストではいちおう上回っているようですが）．そのあたりはハンズオンで紹介があると思うので，手を動かして感触を確かめたいと思います．\n今回のように単純なシミュレーションならRでも十分ですが，もっとrichなエージェントや複雑な環境を前提とすると計算の効率化のために細かい工夫が必要になってくると思います．計算資源も時間もない大学院生なので，そのあたりをJuliaで楽に解決できるようになると非常に嬉しいですね．機会があればもっと大規模なシミュレーションを実装してみたいと思います．"
-  },
-  {
-    "objectID": "posts/julia-bandit-tutorial/index.html#references",
-    "href": "posts/julia-bandit-tutorial/index.html#references",
-    "title": "【Julia】2腕バンディットシミュレーションの実装",
-    "section": "References",
-    "text": "References\n\n\nWilson, R. C., & Collins, A. G. (2019). Ten simple rules for the computational modeling of behavioral data. Elife, 8.\n\n\n片平健太郎. (2018). 行動データの計算論モデリング 強化学習モデルを例として. オーム社."
-  },
-  {
-    "objectID": "terms.html",
-    "href": "terms.html",
-    "title": "Terms",
-    "section": "",
-    "text": "当サイトのリンクやバナーから移動したサイトで提供される情報やサービス等について一切の責任を負いません． 当サイトのコンテンツや情報については，可能なかぎり正確な情報を提供するように努めておりますが，正確性や安全性を保証するものではありません．\n当サイトに掲載された内容によって生じた損害等の一切の責任を負いかねます．"
-  },
-  {
-    "objectID": "terms.html#著作権",
-    "href": "terms.html#著作権",
-    "title": "Terms",
-    "section": "著作権",
-    "text": "著作権\n当サイトで掲載している文章や画像などは，断りがある箇所を除いてCC-BY-NC 4.0で提供されています．"
-  },
-  {
-    "objectID": "terms.html#リンク",
-    "href": "terms.html#リンク",
-    "title": "Terms",
-    "section": "リンク",
-    "text": "リンク\n当サイトは基本的にリンクフリーです．リンクを行う場合の許可や連絡は不要です."
+    "text": "まとめ\nせっかくサイトを整備したのでこれからブログ投稿をたくさんしていきたいですね．\nいい加減にプロフィール画像を実家の猫から変えなければ…"
   }
 ]

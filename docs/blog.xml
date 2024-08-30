@@ -9,7 +9,7 @@
 <link>https://hidezosuganuma.net/blog.html</link>
 <atom:link href="https://hidezosuganuma.net/blog.xml" rel="self" type="application/rss+xml"/>
 <description>研究の備忘録や技術系の記事，趣味に関する文章を不定期で投稿します．</description>
-<generator>quarto-1.4.552</generator>
+<generator>quarto-1.5.56</generator>
 <lastBuildDate>Sat, 25 May 2024 15:00:00 GMT</lastBuildDate>
 <item>
   <title>夢のない夢追人のために</title>
@@ -118,6 +118,7 @@ background-color: null;
 font-style: inherit;"># Q学習のシミュレーション</span></span>
 <span id="cb1-8"><span class="kw" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">function</span> <span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">q_learning</span>(alpha<span class="op" style="color: #5E5E5E;
@@ -177,6 +178,7 @@ font-style: inherit;">2</span>)</span>
 <span id="cb1-16"></span>
 <span id="cb1-17">    <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">for</span> t <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span> <span class="fl" style="color: #AD0000;
@@ -216,6 +218,7 @@ background-color: null;
 font-style: inherit;"># [0,1]の一様乱数を使って行動を選択</span></span>
 <span id="cb1-22">        <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">if</span> <span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">rand</span>() <span class="op" style="color: #5E5E5E;
@@ -239,6 +242,7 @@ background-color: null;
 font-style: inherit;">1</span>])</span>
 <span id="cb1-25">        <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">else</span></span>
 <span id="cb1-26">            c[t] <span class="op" style="color: #5E5E5E;
 background-color: null;
@@ -258,6 +262,7 @@ background-color: null;
 font-style: inherit;">2</span>])</span>
 <span id="cb1-28">        <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">end</span></span>
 <span id="cb1-29"></span>
 <span id="cb1-30">        <span class="co" style="color: #5E5E5E;
@@ -278,6 +283,7 @@ background-color: null;
 font-style: inherit;"># 50試行ごとにパラメータ値をフリップ</span></span>
 <span id="cb1-34">        <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">if</span> t <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">%</span> <span class="fl" style="color: #AD0000;
@@ -300,15 +306,19 @@ background-color: null;
 font-style: inherit;">1</span>]</span>
 <span id="cb1-36">        <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">end</span></span>
 <span id="cb1-37">    <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">end</span></span>
 <span id="cb1-38">    <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">return</span> [c, r]</span>
 <span id="cb1-39"><span class="kw" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">end</span>;</span>
 <span id="cb1-40"></span>
 <span id="cb1-41"><span class="co" style="color: #5E5E5E;
@@ -316,6 +326,7 @@ background-color: null;
 font-style: inherit;"># 対数尤度を計算</span></span>
 <span id="cb1-42"><span class="kw" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">function</span> <span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">log_likelihood</span>(params<span class="op" style="color: #5E5E5E;
@@ -352,6 +363,7 @@ background-color: null;
 font-style: inherit;">0.0</span></span>
 <span id="cb1-46">    <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">for</span> t <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span> <span class="fl" style="color: #AD0000;
@@ -408,12 +420,15 @@ background-color: null;
 font-style: inherit;">-</span> Q[c[t]])</span>
 <span id="cb1-50">    <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">end</span></span>
 <span id="cb1-51">    <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">return</span> log_lik</span>
 <span id="cb1-52"><span class="kw" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">end</span>;</span></code></pre></div>
 </div>
 <p>今回は試行数を<img src="https://latex.codecogs.com/png.latex?T=1000">，2つの選択肢から報酬が得られる確率をそれぞれ<img src="https://latex.codecogs.com/png.latex?0.7,0.3">に設定し，50試行ごとに両者をフリップするようにしています．これは認知神経科学の領域で「確率的逆転学習課題」と呼ばれる状況で，環境変動下で行動を柔軟にスイッチできるかを検討する際によく用いられます（他の研究文脈では”restless multi-armed bandit”とも呼ぶようです）．</p>
@@ -594,6 +609,7 @@ font-style: inherit;">undef</span>, N)</span>
 <span id="cb4-7"></span>
 <span id="cb4-8"><span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">for</span> i <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span> <span class="fl" style="color: #AD0000;
@@ -656,6 +672,7 @@ background-color: null;
 font-style: inherit;">2</span>]</span>
 <span id="cb4-20"><span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">end</span></span></code></pre></div>
 </div>
 </section>
@@ -1260,6 +1277,7 @@ font-style: inherit;">quarto</span> preview</span></code></pre></div>
 background-color: null;
 font-style: inherit;">project</span><span class="kw" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">:</span></span>
 <span id="cb3-2"><span class="at" style="color: #657422;
 background-color: null;
@@ -1267,6 +1285,7 @@ font-style: inherit;">  </span><span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">type</span><span class="kw" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">:</span><span class="at" style="color: #657422;
 background-color: null;
 font-style: inherit;"> website</span></span>
@@ -1276,6 +1295,7 @@ font-style: inherit;">  </span><span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">output-dir</span><span class="kw" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">:</span><span class="at" style="color: #657422;
 background-color: null;
 font-style: inherit;"> docs</span></span></code></pre></div>

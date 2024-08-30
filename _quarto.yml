@@ -19,10 +19,16 @@ website:
   favicon: assets/img/favicon.ico
   navbar:
     right:
-      - about.qmd
-      - works.qmd
-      - blog.qmd
-      - link.qmd
+      - file: index.qmd
+        text: Home
+      - file: about.qmd
+        text: About
+      - file: works.qmd
+        text: Works
+      - file: blog.qmd
+        text: Blog
+      - file: link.qmd
+        text: Links
       - icon: twitter
         href: https://twitter.com/hiz_suganuma
       - icon: linkedin

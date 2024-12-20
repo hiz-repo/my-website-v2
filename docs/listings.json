@@ -2,6 +2,7 @@
   {
     "listing": "/blog.html",
     "items": [
+      "/posts/arima2024/index.html",
       "/posts/derby2024/index.html",
       "/posts/julia-bandit-tutorial/index.html",
       "/posts/arima2023/index.html",

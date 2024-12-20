@@ -6,7 +6,7 @@ about:
   image-shape: round
 ---
 
-# Hidezo SUGANUMA
+# About Me
 
 Ph.D. Student
 

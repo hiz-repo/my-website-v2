@@ -35,7 +35,7 @@ categories:
 
 {{< video https://youtu.be/Jnq9wPDoDKg >}}
 
-### ＜2024日本ダービー＞
+#### ＜2024日本ダービー＞
 
 - ◎シックスペンス
 - ◯ジャスティンミラノ

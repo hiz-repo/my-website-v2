@@ -10,7 +10,65 @@
 <atom:link href="https://hidezosuganuma.net/blog.xml" rel="self" type="application/rss+xml"/>
 <description>研究の備忘録や技術系の記事，趣味に関する文章を不定期で投稿します．</description>
 <generator>quarto-1.5.56</generator>
-<lastBuildDate>Sat, 25 May 2024 15:00:00 GMT</lastBuildDate>
+<lastBuildDate>Fri, 20 Dec 2024 15:00:00 GMT</lastBuildDate>
+<item>
+  <title>ちょうどよく忙しい</title>
+  <dc:creator>Hidezo Suganuma</dc:creator>
+  <link>https://hidezosuganuma.net/posts/arima2024/</link>
+  <description><![CDATA[ 
+
+
+
+
+
+<p>ドウデュース取消の報に接したのは金曜の昼下がり，Zoomでの研究ミーティング中のことだった．折から風邪を引いてしまい微熱でなかば朦朧としていることもあってか，8時間ほど経過した今になってもどこか現実感がわかない．本当はさっさと来週の授業資料を作らなければいけない身分なのだが，一人の部屋で所在なくユンケルの空き瓶を弄んでは一部が灰色に塗りつぶされた出馬表を眺めてばかりいる．</p>
+<p>とりあえず腹くらいは満たさねばと思い，這々の体でコンビニまで出向いて「赤いきつね」を購入した．そこまでは良かったのだが，うっかりお湯を手にこぼして地味にデカい水疱をこさえてしまったところで，気力を完全に喪失してしまった（そういえば蓋を開けると摩訶不思議なことに2枚入っているはずの「お揚げ」が両方とも真っ二つに割れていたのだが，輸送段階でいったい何が起こったのだろう）．この限界きわまる状況でもとりあえず遂行できるタスクといえば，かくのごとく誰が読むともわからない駄文をしたためることくらいである．</p>
+<p>もともと有馬現地参戦の予定はなかったのだが，これで現地でドウデュースの走りを目の当たりにしたのは今年の天皇賞（秋）が最初で最後となった．リバティアイランド軸で買っていたので最後の直線はむなしく頬の熱がスーッと引いていく感覚を味わうだけであったが，先行各馬を次元の違う末脚で抜き去るドウデュースを目にしたときは，いささかの誇張もなく肌に粟を生じた．若輩の長くもない競馬歴ではあるが，現地で見たレースのなかでは間違いなく3本の指に入る衝撃だったといえる．歴史的名馬のキャリア集大成を目撃する機会が失われてしまったことは，本当に残念でならない．</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://hidezosuganuma.net/posts/arima2024/fig1-1600w.webp" class="img-fluid figure-img" srcset="fig1-1600w.webp 1600w, fig1-800w.webp 800w, fig1-400w.webp 400w" decoding="async"></p>
+<figcaption>2024天皇賞（秋）発走の直前．インフルエンザワクチンと同様，成人であれば年に1回はG1デーの競馬場の空気を身体に摂り込むことが必要である</figcaption>
+</figure>
+</div>
+<p>ちょうど11月の頭にバンコクを訪問する用事があったので本当なら払戻金で王侯貴族のごとく豪遊したかったのだが，残念ながら叶わなかった（悲しいことに，この手の皮算用が現実化した覚えがない）．それでも物価がさして高いわけではないので，万年金欠の貧乏大学院生の身分であってもスケジュールの範囲で観光などやりたいことはおよそ全部できた．願わくばあらゆる国際学会を東南アジアとその近辺で開催してほしいものである．ここ数年でタイバーツはかなり上がっているらしく，同行していたタイに心得のある友人は折に触れて「昔はもっと安かった」とこぼしていた．</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://hidezosuganuma.net/posts/arima2024/fig2-1600w.webp" class="img-fluid figure-img" srcset="fig2-1600w.webp 1600w, fig2-800w.webp 800w, fig2-400w.webp 400w" decoding="async"></p>
+<figcaption>チュラロンコン大学（จุฬาลงกรณ์มหาวิทยาลัย）．いっちょ学食を喰らってやろうと食堂に潜入したのだが，現地のQR決済アプリしか対応していないと言われて泣く泣く断念した</figcaption>
+</figure>
+</div>
+<p>11月はちょうど雨季から乾季へと移行する時期にあたり，日中はかなり気温も上がるが基本的には過ごしやすい気候だった．街なかのカフェのテラス席で試みにMacBookを広げてみれば，それだけでワーケーションを愉しむビジネスマンの気分を味わえる．路地からうっすら漂ってくる大麻のニオイすらも異国情緒を掻き立てるスパイスとして下卑た好奇心をくすぐるし，日本人とみるや気さくに声をかけてくる駐在員やベテラン旅行者の方々と酒を酌み交わすのもまた一興である．経済的・時間的な余裕があれば博士論文の執筆期間あたりに長期滞在してみたいところだが，果たして叶うだろうか．</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://hidezosuganuma.net/posts/arima2024/fig3-1600w.webp" class="img-fluid figure-img" srcset="fig3-1600w.webp 1600w, fig3-800w.webp 800w, fig3-400w.webp 400w" decoding="async"></p>
+<figcaption>移動中に発見した日系の居酒屋．どこからどう見たって磯丸水産のパチモンなのだが，それはそれとして現地の評判はけっこう良いらしい</figcaption>
+</figure>
+</div>
+<p>例年であれば有馬記念が終わればもう一年が終わったくらいの感慨があるものだが，今年はやることが山積しているせいでそんな気は微塵も起こらない．暇になると変に他人のことばかり気にしてしまう性分なので，忙しいくらいがちょうどいいのかもしれない．じっさい昔の友人達が自分抜きで忘年会（それも普通の学生なら気後れするような高級店で）を開催しているのを先ほどインスタで観測したが，いまの私はワット・ポーの涅槃仏のごとく心の平穏を保つことができている．このくらいの「ちょうどいい忙しさ」を年間を通して維持することを暫定的な来年の目標としておきたい．</p>
+<p>もちろん心の平穏なるものタスクの多寡のみによって決まるものではなく，たとえば十分な銀行口座の残高といった他の変数に影響されるのは火を見るより明らかであろう．というわけで，今年の有馬記念は大穴<strong>◎シュトルーヴェ</strong>から一攫千金を狙いたい．もともとが逃げ馬不在のメンバー構成だが，大本命ドウデュースの取消に大外シャフリヤールの逃げ宣言，さらには最内の横山典Jと不確定要素がかなり多く，展開予測が極端に難しい一線となった．抜けた実力馬が不在の状況で乱ペースに陥ることがあれば，無欲の追い込みにもチャンスが巡ってくるはずだ．</p>
+<section id="有馬記念" class="level4">
+<h4 class="anchored" data-anchor-id="有馬記念">＜2024有馬記念＞</h4>
+<ul>
+<li>◎シュトルーヴェ</li>
+<li>◯アーバンシック</li>
+<li>▲ジャスティンパレス</li>
+<li>△ダノンデサイル</li>
+<li>△ベラジオオペラ</li>
+<li>△ローシャムパーク</li>
+<li>△レガレイラ</li>
+</ul>
+<p>見事に大金を手にした暁には来年ベトナム観光にでも行くつもりである．あるいは，身軽なうちにウズベキスタンに突撃するのもアリかもしれない．可能性は（今のところ）無限大である．</p>
+
+
+</section>
+
+ ]]></description>
+  <category>雑記</category>
+  <category>競馬</category>
+  <category>有馬記念</category>
+  <guid>https://hidezosuganuma.net/posts/arima2024/</guid>
+  <pubDate>Fri, 20 Dec 2024 15:00:00 GMT</pubDate>
+</item>
 <item>
   <title>夢のない夢追人のために</title>
   <dc:creator>Hidezo Suganuma</dc:creator>
@@ -39,8 +97,8 @@
 <p>ふと気がつけば発走まであと14時間という頃合いである．いまはこんなに脳髄が熱を持って眠れないほどなのだが，いざレースが終わってダービーの魔法が解けてしまえば独特の浮遊感はあっという間に虚空の彼方に消え去ってしまうことを私は知っている．そして，朧げに見える月に手を伸ばそうと暗い淵でもがきながら，同時にまだ水底に足がつかないのかと焦り続けているような，どっちつかずの情けない日常がまた続いていくのだ．夢から覚めたとき億万長者になっているか文無しになっているかは神のみぞ知るところだが，願わくば申請中の授業料免除が降りなくともメシを食っていけるだけの金を手にしていることを祈りたいものである．</p>
 <p>締切までに二転三転四転五転するのは目に見えているが，とりあえず本命は<strong>◎シックスペンス</strong>とさせていただきたい．一線級と未対戦ながら上位人気に推されているとなると疑いたくなるのが人情だが，どうみてもスロー濃厚なメンバー構成でポジション意識の高い川田Jと来れば，ここはしっかり好勝負に持ち込んでくれるはず．スタミナというよりはむしろトップスピードが求められる展開になると見込んで，ここは頭まで狙ってみたい．</p>
 <div class="quarto-video ratio ratio-16x9"><iframe data-external="1" src="https://www.youtube.com/embed/Jnq9wPDoDKg" title="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div>
-<section id="日本ダービー" class="level3">
-<h3 class="anchored" data-anchor-id="日本ダービー">＜2024日本ダービー＞</h3>
+<section id="日本ダービー" class="level4">
+<h4 class="anchored" data-anchor-id="日本ダービー">＜2024日本ダービー＞</h4>
 <ul>
 <li>◎シックスペンス</li>
 <li>◯ジャスティンミラノ</li>
@@ -1184,7 +1242,7 @@ Wilson, R. C., &amp; Collins, A. G. (2019). Ten simple rules for the computation
 <p>2023年の下半期は一度も競馬場に足を運ぶことなく終わりそうである．平生なら大晦日の東京2歳優駿牝馬を現地観戦して競馬納めとするところだが，あいにく今年は上京して初めて年末年始に帰省する予定なので，それも叶いそうもない．放蕩息子としては偶に元気な顔を見せるくらいしか孝行の術がないのでこういう機会を無下にするわけにもいかないが，夕映えのスタンドで寒風に身を震わせながら食らうモツ煮（ちょっと多すぎるくらいの七味を加えるのがキモだ）がなんだか恋しい．</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="https://hidezosuganuma.net/posts/arima2023/fig1-960w.webp" class="img-fluid figure-img" style="width:50.0%" srcset="fig1-960w.webp 960w, fig1-400w.webp 400w, fig1-800w.webp 800w" decoding="async"></p>
+<p><img src="https://hidezosuganuma.net/posts/arima2023/fig1-960w.webp" class="img-fluid figure-img" srcset="fig1-960w.webp 960w, fig1-400w.webp 400w, fig1-800w.webp 800w" decoding="async"></p>
 <figcaption>去年の大晦日の大井．メインは10番人気の笹川に割られて涙をのんだ</figcaption>
 </figure>
 </div>

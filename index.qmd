@@ -6,7 +6,7 @@ about:
   image-shape: round
 ---
 
-# 菅沼 秀蔵
+# About Me
 
 東京大学大学院人文社会系研究科<br>
 博士課程1年

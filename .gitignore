@@ -12,5 +12,6 @@ jenv
 .vdoc*
 *_files
 /env/
+private
 
 /.luarc.json

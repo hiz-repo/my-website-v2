@@ -21,8 +21,8 @@ website:
     right:
       - file: index.qmd
         text: Home
-      - file: about.qmd
-        text: About
+      - file: bio.qmd
+        text: Bio
       - file: works.qmd
         text: Works
       - file: blog.qmd

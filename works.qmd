@@ -7,10 +7,12 @@ about:
 
 ※詳細は[CV](assets/pdf/CV.pdf)をご覧ください．
 
-## Academic Papers
+## Publications
 
-- Suganuma, H., Naito, A., Katahira, K. & Kameda, T. (in press). When to stop social learning from a predecessor in an information-foraging task. *Evolutionary Human Sciences*.
+- **Suganuma, H.**, Naito, A., Katahira, K., & Kameda, T. (2025). When to stop social learning from a
+predecessor in an information-foraging task. *Evolutionary Human Sciences, 7*, e2. [https://doi.org/10.1017/ehs.2024.29](https://doi.org/10.1017/ehs.2024.29)
 
+- Mori, R., **Suganuma, H.**, & Kameda, T. (2024). Generalizability of Conformist Social Influence Beyond Direct Reference. Proceedings of the Annual Meeting of the Cognitive Science Society, 46.
 
 ## Others
 
